@@ -81,7 +81,7 @@
                         <!-- logo  -->
                         <div class="aa-logo">
                             <!-- Text based logo -->
-                            <a href="index.html">
+                            <a href="{{ url('/assignment05') }}">
                                 <span class="fa fa-shopping-cart"></span>
                                 <p>daily<strong>Shop</strong> <span>Your Shopping Partner</span></p>
                             </a>
@@ -161,7 +161,7 @@
                 <div class="navbar-collapse collapse">
                     <!-- Left nav -->
                     <ul class="nav navbar-nav">
-                        <li><a href="index.html">Home</a></li>
+                        <li><a href="{{ url('/assignment05') }}">Home</a></li>
                         <li><a href="#">Men <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="#">Casual</a></li>

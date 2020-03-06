@@ -71,7 +71,7 @@ return [
             'database' => 'd914jab15c6ai4' || env('DB_DATABASE', 'forge'),
             'username' => 'coyguvcdgovcoo' || env('DB_USERNAME', 'forge'),
             'password' => '64e1d8a059589e6cfad075101131c74f833f9411c11677c22ba2315a15246b9e' || env('DB_PASSWORD', ''),
-            'charset' => 'utf8',
+            'charset' => 'utf8mb4',
             'prefix' => '',
             'prefix_indexes' => true,
             'schema' => 'public',

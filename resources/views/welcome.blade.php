@@ -85,7 +85,7 @@
                 </div>
 
                 <div class="links">
-                    <a href="/blog/public/assignment05">Assignment 05</a>
+                    <a href="{{ url('/assignment05') }}">Assignment 05</a>
                 </div>
             </div>
         </div>
