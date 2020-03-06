@@ -20,7 +20,7 @@
                             <span data-seq>Save Up to 75% Off</span>
                             <h2 data-seq>{{ $cat['name'] }}</h2>
                             <p data-seq>{{ $cat['description'] }}</p>
-                            <a data-seq href="/blog/public/assignment05/category?cat={{ $cat['id'] }}" class="aa-shop-now-btn aa-secondary-btn">SHOP NOW</a>
+                            <a data-seq href="{{ url("/assignment05/category/$cat[id]") }}" class="aa-shop-now-btn aa-secondary-btn">SHOP NOW</a>
                         </div>
                     </li>
                     @endforeach
@@ -51,7 +51,7 @@
                                     <img src="{{ $first['thumbnail'] }}" alt="img">
                                     <div class="aa-prom-content">
                                         <span>75% Off</span>
-                                        <h4><a href="/blog/public/assignment05/category?cat={{ $first['id'] }}">{{ $first['name'] }}</a></h4>
+                                        <h4><a href="{{ url("/assignment05/category/$first[id]") }}">{{ $first['name'] }}</a></h4>
                                     </div>
                                 </div>
                             </div>
@@ -65,7 +65,7 @@
                                             <img src="{{ $cat['thumbnail'] }}" alt="img">
                                             <div class="aa-prom-content">
                                                 <span>Exclusive Item</span>
-                                                <h4><a href="/blog/public/assignment05/category?cat={{ $cat['id'] }}">{{ $cat['name'] }}</a></h4>
+                                                <h4><a href="{{ url("/assignment05/category/$cat[id]") }}">{{ $cat['name'] }}</a></h4>
                                             </div>
                                         </div>
                                     </div>
@@ -105,7 +105,7 @@
                                                 <a class="aa-product-img" href="#"><img src="{{ $pro->product_thumbnail }}" alt="polo shirt img"></a>
                                                 <a class="aa-add-card-btn" href="#"><span class="fa fa-shopping-cart"></span>Add To Cart</a>
                                                 <figcaption>
-                                                    <h4 class="aa-product-title"><a href="#">{{ $pro->product_name }}</a></h4>
+                                                    <h4 class="aa-product-title"><a href="{{ url("/assignment05/product/$pro->id") }}">{{ $pro->product_name }}</a></h4>
                                                     <span class="aa-product-price">${{ number_format($pro->price, 2) }}</span>
                                                 </figcaption>
                                             </figure>
@@ -133,7 +133,7 @@
                                                 <a class="aa-product-img" href="#"><img src="{{ $pro->product_thumbnail }}" alt="polo shirt img"></a>
                                                 <a class="aa-add-card-btn" href="#"><span class="fa fa-shopping-cart"></span>Add To Cart</a>
                                                 <figcaption>
-                                                    <h4 class="aa-product-title"><a href="#">{{ $pro->product_name }}</a></h4>
+                                                    <h4 class="aa-product-title"><a href="{{ url("/assignment05/product/$pro->id") }}">{{ $pro->product_name }}</a></h4>
                                                     <span class="aa-product-price">${{ number_format($pro->price, 2) }}</span>
                                                 </figcaption>
                                             </figure>
@@ -161,7 +161,7 @@
                                                 <a class="aa-product-img" href="#"><img src="{{ $pro->product_thumbnail }}" alt="polo shirt img"></a>
                                                 <a class="aa-add-card-btn" href="#"><span class="fa fa-shopping-cart"></span>Add To Cart</a>
                                                 <figcaption>
-                                                    <h4 class="aa-product-title"><a href="#">{{ $pro->product_name }}</a></h4>
+                                                    <h4 class="aa-product-title"><a href="{{ url("/assignment05/product/$pro->id") }}">{{ $pro->product_name }}</a></h4>
                                                     <span class="aa-product-price">${{ number_format($pro->price, 2) }}</span>
                                                     <span class="aa-product-price"><del>${{ number_format($pro->price*2, 2) }}</del></span>
                                                 </figcaption>
@@ -172,7 +172,7 @@
                                                 <a href="#" data-toggle2="tooltip" data-placement="top" title="Quick View" data-toggle="modal" data-target="#quick-view-modal"><span class="fa fa-search"></span></a>
                                             </div>
                                             <!-- product badge -->
-                                            <span class="aa-badge aa-sale" href="#">SALE!</span>
+{{--                                            <span class="aa-badge aa-sale" href="#">SALE!</span>--}}
                                         </li>
                                     @endforeach
                                 </ul>

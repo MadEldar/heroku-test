@@ -13,12 +13,12 @@
                 <h2>{{ $product->product_name }}</h2>
                 <ol class="breadcrumb">
                     <li>
-                        <a href="/blog/public/assignment05">
+                        <a href="{{ url('/assignment05') }}">
                             Home
                         </a>
                     </li>
                     <li>
-                        <a href="/blog/public/assignment05/category?cat={{ $product->category_id }}">
+                        <a href="{{ url("/assignment05/category/$product->category_id") }}">
                             {{ $product->category_name }}
                         </a>
                     </li>
@@ -47,13 +47,13 @@
                                         </div>
                                         <div class="simpleLens-thumbnails-container">
                                             <a data-big-image="/blog/public/img/view-slider/medium/polo-shirt-1.png" data-lens-image="/blog/public/img/view-slider/large/polo-shirt-1.png" class="simpleLens-thumbnail-wrapper" href="#">
-                                                <img src="/blog/public/img/view-slider/thumbnail/polo-shirt-1.png">
+                                                <img src="{{ asset('img/view-slider/thumbnail/polo-shirt-1.png') }}">
                                             </a>
                                             <a data-big-image="/blog/public/img/view-slider/medium/polo-shirt-3.png" data-lens-image="/blog/public/img/view-slider/large/polo-shirt-3.png" class="simpleLens-thumbnail-wrapper" href="#">
-                                                <img src="/blog/public/img/view-slider/thumbnail/polo-shirt-3.png">
+                                                <img src="{{ asset('img/view-slider/thumbnail/polo-shirt-3.png') }}">
                                             </a>
                                             <a data-big-image="/blog/public/img/view-slider/medium/polo-shirt-4.png" data-lens-image="/blog/public/img/view-slider/large/polo-shirt-4.png" class="simpleLens-thumbnail-wrapper" href="#">
-                                                <img src="/blog/public/img/view-slider/thumbnail/polo-shirt-4.png">
+                                                <img src="{{ asset('img/view-slider/thumbnail/polo-shirt-4.png') }}">
                                             </a>
                                         </div>
                                     </div>
@@ -134,7 +134,7 @@
                                             <div class="media">
                                                 <div class="media-left">
                                                     <a href="#">
-                                                        <img class="media-object" src="/blog/public/img/testimonial-img-3.jpg" alt="girl image">
+                                                        <img class="media-object" src="{{ asset('img/testimonial-img-3.jpg') }}" alt="girl image">
                                                     </a>
                                                 </div>
                                                 <div class="media-body">
@@ -154,7 +154,7 @@
                                             <div class="media">
                                                 <div class="media-left">
                                                     <a href="#">
-                                                        <img class="media-object" src="/blog/public/img/testimonial-img-3.jpg" alt="girl image">
+                                                        <img class="media-object" src="{{ asset('img/testimonial-img-3.jpg') }}" alt="girl image">
                                                     </a>
                                                 </div>
                                                 <div class="media-body">
@@ -212,7 +212,7 @@
                                     <a class="aa-product-img" href="#"><img src="{{ $pro['product_thumbnail'] }}" alt="{{ $pro['product_name'] }}"></a>
                                     <a class="aa-add-card-btn" href="#"><span class="fa fa-shopping-cart"></span>Add To Cart</a>
                                     <figcaption>
-                                        <h4 class="aa-product-title"><a href="/blog/public/assignment05/product?pro={{ $pro['id'] }}">{{ $pro['product_name'] }}</a></h4>
+                                        <h4 class="aa-product-title"><a href="{{ url("/assignment05/product/$pro[id]") }}">{{ $pro['product_name'] }}</a></h4>
                                         <span class="aa-product-price">${{ number_format($pro['price'], 2) }}</span>
                                     </figcaption>
                                 </figure>
@@ -240,7 +240,7 @@
                                                         <div class="simpleLens-container">
                                                             <div class="simpleLens-big-image-container">
                                                                 <a class="simpleLens-lens-image" data-lens-image="/blog/public/img/view-slider/large/polo-shirt-1.png">
-                                                                    <img src="/blog/public/img/view-slider/medium/polo-shirt-1.png" class="simpleLens-big-image">
+                                                                    <img src="{{ asset('img/view-slider/medium/polo-shirt-1.png') }}" class="simpleLens-big-image">
                                                                 </a>
                                                             </div>
                                                         </div>
@@ -248,18 +248,18 @@
                                                             <a href="#" class="simpleLens-thumbnail-wrapper"
                                                                data-lens-image="/blog/public/img/view-slider/large/polo-shirt-1.png"
                                                                data-big-image="/blog/public/img/view-slider/medium/polo-shirt-1.png">
-                                                                <img src="/blog/public/img/view-slider/thumbnail/polo-shirt-1.png">
+                                                                <img src="{{ asset('img/view-slider/thumbnail/polo-shirt-1.png') }}">
                                                             </a>
                                                             <a href="#" class="simpleLens-thumbnail-wrapper"
                                                                data-lens-image="/blog/public/img/view-slider/large/polo-shirt-3.png"
                                                                data-big-image="/blog/public/img/view-slider/medium/polo-shirt-3.png">
-                                                                <img src="/blog/public/img/view-slider/thumbnail/polo-shirt-3.png">
+                                                                <img src="{{ asset('img/view-slider/thumbnail/polo-shirt-3.png') }}">
                                                             </a>
 
                                                             <a href="#" class="simpleLens-thumbnail-wrapper"
                                                                data-lens-image="/blog/public/img/view-slider/large/polo-shirt-4.png"
                                                                data-big-image="/blog/public/img/view-slider/medium/polo-shirt-4.png">
-                                                                <img src="/blog/public/img/view-slider/thumbnail/polo-shirt-4.png">
+                                                                <img src="{{ asset('img/view-slider/thumbnail/polo-shirt-4.png') }}">
                                                             </a>
                                                         </div>
                                                     </div>
@@ -320,7 +320,7 @@
                                     <a class="aa-product-img" href="#"><img src="{{ $pro['product_thumbnail'] }}" alt="{{ $pro['product_name'] }}"></a>
                                     <a class="aa-add-card-btn" href="#"><span class="fa fa-shopping-cart"></span>Add To Cart</a>
                                     <figcaption>
-                                        <h4 class="aa-product-title"><a href="/blog/public/assignment05/product?pro={{ $pro['id'] }}">{{ $pro['product_name'] }}</a></h4>
+                                        <h4 class="aa-product-title"><a href="{{ url("/assignment05/product/$pro[id]") }}">{{ $pro['product_name'] }}</a></h4>
                                         <span class="aa-product-price">${{ number_format($pro['price'], 2) }}</span>
                                     </figcaption>
                                 </figure>
@@ -348,7 +348,7 @@
                                                         <div class="simpleLens-container">
                                                             <div class="simpleLens-big-image-container">
                                                                 <a class="simpleLens-lens-image" data-lens-image="/blog/public/img/view-slider/large/polo-shirt-1.png">
-                                                                    <img src="/blog/public/img/view-slider/medium/polo-shirt-1.png" class="simpleLens-big-image">
+                                                                    <img src="{{ asset('img/view-slider/medium/polo-shirt-1.png') }}" class="simpleLens-big-image">
                                                                 </a>
                                                             </div>
                                                         </div>
@@ -356,18 +356,18 @@
                                                             <a href="#" class="simpleLens-thumbnail-wrapper"
                                                                data-lens-image="/blog/public/img/view-slider/large/polo-shirt-1.png"
                                                                data-big-image="/blog/public/img/view-slider/medium/polo-shirt-1.png">
-                                                                <img src="/blog/public/img/view-slider/thumbnail/polo-shirt-1.png">
+                                                                <img src="{{ asset('img/view-slider/thumbnail/polo-shirt-1.png') }}">
                                                             </a>
                                                             <a href="#" class="simpleLens-thumbnail-wrapper"
                                                                data-lens-image="/blog/public/img/view-slider/large/polo-shirt-3.png"
                                                                data-big-image="/blog/public/img/view-slider/medium/polo-shirt-3.png">
-                                                                <img src="/blog/public/img/view-slider/thumbnail/polo-shirt-3.png">
+                                                                <img src="{{ asset('img/view-slider/thumbnail/polo-shirt-3.png') }}">
                                                             </a>
 
                                                             <a href="#" class="simpleLens-thumbnail-wrapper"
                                                                data-lens-image="/blog/public/img/view-slider/large/polo-shirt-4.png"
                                                                data-big-image="/blog/public/img/view-slider/medium/polo-shirt-4.png">
-                                                                <img src="/blog/public/img/view-slider/thumbnail/polo-shirt-4.png">
+                                                                <img src="{{ asset('img/view-slider/thumbnail/polo-shirt-4.png') }}">
                                                             </a>
                                                         </div>
                                                     </div>

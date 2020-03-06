@@ -38,8 +38,7 @@ class Assignment05 extends Controller
         ]);
     }
 
-    public function category() {
-        $catId = $_GET['cat'];
+    public function category($catId) {
         $category = Category::getAllProducts($catId);
         $top_5 = Category::take(5)
             ->where('id', '!=', $catId)
@@ -51,8 +50,7 @@ class Assignment05 extends Controller
         ]);
     }
 
-    public function product() {
-        $proId = $_GET['pro'];
+    public function product($proId) {
         $product = Product::getProductWithCategory($proId);
         $same_brand = Product::where('brand_id', $product->brand_id)
             ->where('id', '!=', $proId)
