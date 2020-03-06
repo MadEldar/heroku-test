@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-@include('assignment01/layout/head')
+@include('assignment05/layout/head')
 <body>
-@include('assignment01/layout/header')
+@include('assignment05/layout/header')
 
 <!-- catg header banner section -->
 <section id="aa-catg-head-banner">
@@ -62,7 +62,7 @@
                                             <a class="aa-add-card-btn" href="#"><span class="fa fa-shopping-cart"></span>Add To Cart</a>
                                             <figcaption>
                                                 <h4 class="aa-product-title">
-                                                    <a href="/blog/public/assignment01/product?pro={{ $pro['id'] }}">
+                                                    <a href="/blog/public/assignment05/product?pro={{ $pro['id'] }}">
                                                         {{ $pro['product_name'] }}
                                                     </a>
                                                 </h4>
@@ -189,7 +189,7 @@
                         <h3>Category</h3>
                         <ul class="aa-catg-nav">
                             @foreach($top_5 as $cat)
-                                <li><a href="/blog/public/assignment01/category?cat={{ $cat->id }}">{{ $cat->category_name }}</a></li>
+                                <li><a href="/blog/public/assignment05/category?cat={{ $cat->id }}">{{ $cat->category_name }}</a></li>
                             @endforeach
                         </ul>
                     </div>
@@ -246,8 +246,8 @@
 </section>
 <!-- / product category -->
 
-@include('assignment01/layout/footer')
+@include('assignment05/layout/footer')
 
-@include('assignment01/layout/scripts')
+@include('assignment05/layout/scripts')
 </body>
 </html>

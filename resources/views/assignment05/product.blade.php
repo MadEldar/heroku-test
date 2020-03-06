@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-@include('assignment01/layout/head')
+@include('assignment05/layout/head')
 <body>
-@include('assignment01/layout/header')
+@include('assignment05/layout/header')
 
 <!-- catg header banner section -->
 <section id="aa-catg-head-banner">
@@ -13,12 +13,12 @@
                 <h2>{{ $product->product_name }}</h2>
                 <ol class="breadcrumb">
                     <li>
-                        <a href="/blog/public/assignment01">
+                        <a href="/blog/public/assignment05">
                             Home
                         </a>
                     </li>
                     <li>
-                        <a href="/blog/public/assignment01/category?cat={{ $product->category_id }}">
+                        <a href="/blog/public/assignment05/category?cat={{ $product->category_id }}">
                             {{ $product->category_name }}
                         </a>
                     </li>
@@ -212,7 +212,7 @@
                                     <a class="aa-product-img" href="#"><img src="{{ $pro['product_thumbnail'] }}" alt="{{ $pro['product_name'] }}"></a>
                                     <a class="aa-add-card-btn" href="#"><span class="fa fa-shopping-cart"></span>Add To Cart</a>
                                     <figcaption>
-                                        <h4 class="aa-product-title"><a href="/blog/public/assignment01/product?pro={{ $pro['id'] }}">{{ $pro['product_name'] }}</a></h4>
+                                        <h4 class="aa-product-title"><a href="/blog/public/assignment05/product?pro={{ $pro['id'] }}">{{ $pro['product_name'] }}</a></h4>
                                         <span class="aa-product-price">${{ number_format($pro['price'], 2) }}</span>
                                     </figcaption>
                                 </figure>
@@ -320,7 +320,7 @@
                                     <a class="aa-product-img" href="#"><img src="{{ $pro['product_thumbnail'] }}" alt="{{ $pro['product_name'] }}"></a>
                                     <a class="aa-add-card-btn" href="#"><span class="fa fa-shopping-cart"></span>Add To Cart</a>
                                     <figcaption>
-                                        <h4 class="aa-product-title"><a href="/blog/public/assignment01/product?pro={{ $pro['id'] }}">{{ $pro['product_name'] }}</a></h4>
+                                        <h4 class="aa-product-title"><a href="/blog/public/assignment05/product?pro={{ $pro['id'] }}">{{ $pro['product_name'] }}</a></h4>
                                         <span class="aa-product-price">${{ number_format($pro['price'], 2) }}</span>
                                     </figcaption>
                                 </figure>
@@ -424,8 +424,8 @@
 </section>
 <!-- / product category -->
 
-@include('assignment01/layout/footer')
+@include('assignment05/layout/footer')
 
-@include('assignment01/layout/scripts')
+@include('assignment05/layout/scripts')
 </body>
 </html>

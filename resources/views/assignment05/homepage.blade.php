@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-@include('assignment01/layout/head')
+@include('assignment05/layout/head')
 <body>
-@include('assignment01/layout/header')
+@include('assignment05/layout/header')
 
 <!-- Start slider -->
 <section id="aa-slider">
@@ -20,7 +20,7 @@
                             <span data-seq>Save Up to 75% Off</span>
                             <h2 data-seq>{{ $cat['name'] }}</h2>
                             <p data-seq>{{ $cat['description'] }}</p>
-                            <a data-seq href="/blog/public/assignment01/category?cat={{ $cat['id'] }}" class="aa-shop-now-btn aa-secondary-btn">SHOP NOW</a>
+                            <a data-seq href="/blog/public/assignment05/category?cat={{ $cat['id'] }}" class="aa-shop-now-btn aa-secondary-btn">SHOP NOW</a>
                         </div>
                     </li>
                     @endforeach
@@ -51,7 +51,7 @@
                                     <img src="{{ $first['thumbnail'] }}" alt="img">
                                     <div class="aa-prom-content">
                                         <span>75% Off</span>
-                                        <h4><a href="/blog/public/assignment01/category?cat={{ $first['id'] }}">{{ $first['name'] }}</a></h4>
+                                        <h4><a href="/blog/public/assignment05/category?cat={{ $first['id'] }}">{{ $first['name'] }}</a></h4>
                                     </div>
                                 </div>
                             </div>
@@ -65,7 +65,7 @@
                                             <img src="{{ $cat['thumbnail'] }}" alt="img">
                                             <div class="aa-prom-content">
                                                 <span>Exclusive Item</span>
-                                                <h4><a href="/blog/public/assignment01/category?cat={{ $cat['id'] }}">{{ $cat['name'] }}</a></h4>
+                                                <h4><a href="/blog/public/assignment05/category?cat={{ $cat['id'] }}">{{ $cat['name'] }}</a></h4>
                                             </div>
                                         </div>
                                     </div>
@@ -225,8 +225,8 @@
 </section>
 <!-- / Support section -->
 
-@include('assignment01/layout/footer')
+@include('assignment05/layout/footer')
 
-@include('assignment01/layout/scripts')
+@include('assignment05/layout/scripts')
 </body>
 </html>

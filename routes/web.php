@@ -14,6 +14,6 @@
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/assignment01', 'Assignment01@homepage');
-Route::get('/assignment01/category', 'Assignment01@category');
-Route::get('/assignment01/product', 'Assignment01@product');
+Route::get('/assignment05', 'Assignment05@homepage');
+Route::get('/assignment05/category', 'Assignment05@category');
+Route::get('/assignment05/product', 'Assignment05@product');

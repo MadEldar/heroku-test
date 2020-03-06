@@ -6,7 +6,7 @@ use App\Category;
 use App\Product;
 use mysqli;
 
-class Assignment01 extends Controller
+class Assignment05 extends Controller
 {
     public function homepage() {
         $categories = Category::take(5)
@@ -27,7 +27,7 @@ class Assignment01 extends Controller
         $lowCost = Product::take(8)
             ->orderBy('price', 'asc')
             ->get();
-        return view('assignment01/homepage', [
+        return view('assignment05/homepage', [
             'title' => 'Daily Shop - Homepage',
             'categories' => json_decode($categories, true),
             'products' => [
@@ -44,7 +44,7 @@ class Assignment01 extends Controller
         $top_5 = Category::take(5)
             ->where('id', '!=', $catId)
             ->get();
-        return view('assignment01/category', [
+        return view('assignment05/category', [
             'title' => $category->category_name . ' - Category',
             'category' => $category,
             'top_5' => $top_5
@@ -62,7 +62,7 @@ class Assignment01 extends Controller
             ->where('id', '!=', $proId)
             ->take(8)
             ->get();
-        return view('assignment01/product', [
+        return view('assignment05/product', [
             'title' => $product->product_name . ' - Product details',
             'product' => $product,
             'same_brand' => $same_brand,
