@@ -1,2 +1,11 @@
-<script src="js/scripts.js"></script>
-<script src="js/custom.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script type="text/javascript" src="/blog/public/js/bootstrap.js"></script>
+<script type="text/javascript" src="/blog/public/js/jquery.smartmenus.js"></script>
+<script type="text/javascript" src="/blog/public/js/jquery.smartmenus.bootstrap.js"></script>
+<script type="text/javascript" src="/blog/public/js/sequence.js"></script>
+<script type="text/javascript" src="/blog/public/js/sequence-theme.modern-slide-in.js"></script>
+<script type="text/javascript" src="/blog/public/js/jquery.simpleGallery.js"></script>
+<script type="text/javascript" src="/blog/public/js/jquery.simpleLens.js"></script>
+<script type="text/javascript" src="/blog/public/js/slick.js"></script>
+<script type="text/javascript" src="/blog/public/js/nouislider.js"></script>
+<script type="text/javascript" src="/blog/public/js/custom.js"></script>

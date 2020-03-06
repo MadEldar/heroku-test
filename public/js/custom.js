@@ -1,475 +1,359 @@
-(function() {
-	'use strict';
+/**
+  * Template Name: Daily Shop
+  * Version: 1.0
+  * Template Scripts
+  * Author: MarkUps
+  * Author URI: http://www.markups.io/
 
-	/*----------------------------------------
-		Detect Mobile
-	----------------------------------------*/
-	var isMobile = {
-		Android: function() {
-			return navigator.userAgent.match(/Android/i);
-		},
-			BlackBerry: function() {
-			return navigator.userAgent.match(/BlackBerry/i);
-		},
-			iOS: function() {
-			return navigator.userAgent.match(/iPhone|iPad|iPod/i);
-		},
-			Opera: function() {
-			return navigator.userAgent.match(/Opera Mini/i);
-		},
-			Windows: function() {
-			return navigator.userAgent.match(/IEMobile/i);
-		},
-			any: function() {
-			return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
-		}
-	};
-
-	// for megamenu purpose
-	jQuery(document).on('click', '.probootstrap-megamenu .dropdown-menu', function(e) {
-	  e.stopPropagation()
-	});
-
-	/*----------------------------------------
-		Menu Hover
-	----------------------------------------*/
-	var menuHover = function() {
-		if (!isMobile.any()) {
-			jQuery('.probootstrap-navbar .navbar-nav li.dropdown').hover(function() {
-			  jQuery(this).find('> .dropdown-menu').stop(true, true).delay(200).fadeIn(500).addClass('animated-fast fadeInUp');
-			}, function() {
-				jQuery(this).find('> .dropdown-menu').stop(true, true).fadeOut(200).removeClass('animated-fast fadeInUp')
-			});
-		}
-	}
-	/*----------------------------------------
-		Carousel
-	----------------------------------------*/
-	var owlCarousel = function(){
-
-		var owl = jQuery('.owl-carousel-carousel');
-		owl.owlCarousel({
-			items: 3,
-			loop: true,
-			margin: 20,
-			nav: true,
-			dots: true,
-			smartSpeed: 800,
-			autoHeight: true,
-			navText: [
-		      "<i class='icon-keyboard_arrow_left owl-direction'></i>",
-		      "<i class='icon-keyboard_arrow_right owl-direction'></i>"
-	     	],
-	     	responsive:{
-	        0:{
-	            items:1
-	        },
-	        600:{
-	            items:2
-	        },
-	        1000:{
-	            items:3
-	        }
-	    	}
-		});
-
-		var owl = jQuery('.owl-carousel-fullwidth');
-		owl.owlCarousel({
-			items: 1,
-			loop: true,
-			margin: 20,
-			nav: false,
-			dots: true,
-			smartSpeed: 800,
-			autoHeight: true,
-			autoplay: true,
-			navText: [
-		      "<i class='icon-keyboard_arrow_left owl-direction'></i>",
-		      "<i class='icon-keyboard_arrow_right owl-direction'></i>"
-	     	]
-		});
-
-		var owl = jQuery('.owl-work');
-		owl.owlCarousel({
-			stagePadding: 150,
-			loop: true,
-			margin: 20,
-			nav: true,
-			dots: false,
-			mouseDrag: false,
-			autoWidth: true,
-			autoHeight: true,
-	    autoplay: true,
-	    autoplayTimeout:2000,
-	    autoplayHoverPause:true,
-			navText: [	
-				"<i class='icon-chevron-thin-left'></i>",
-				"<i class='icon-chevron-thin-right'></i>"
-			],
-			responsive:{
-			  0:{
-		      items:1,
-		      stagePadding: 10
-			  },
-			  500:{
-			  	items:2,
-		      stagePadding: 20
-			  },
-			  600:{
-		      items:2,
-		      stagePadding: 40
-			  },
-			  800: {
-			  	items:2,
-			  	stagePadding: 100
-			  },
-			  1100:{
-		      items:3
-			  },
-			  1400:{
-		      items:4
-			  },
-			}
-		});
-	};
-
-	/*----------------------------------------
-		Slider
-	----------------------------------------*/
-	var flexSlider = function() {
-	  jQuery('.flexslider').flexslider({
-	    animation: "fade",
-	    prevText: "",
-	    nextText: "",
-	    slideshow: true
-	  });
-	}
-
-	/*----------------------------------------
-		Feature Showcase
-	----------------------------------------*/
-	var showcase = function() {
-
-		jQuery('.probootstrap-showcase-nav ul li a').on('click', function(e){
-
-			var $this = jQuery(this),
-					index = $this.closest('li').index();
-							
-			$this.closest('.probootstrap-feature-showcase').find('.probootstrap-showcase-nav ul li').removeClass('active');
-			$this.closest('li').addClass('active');
-
-			$this.closest('.probootstrap-feature-showcase').find('.probootstrap-images-list li').removeClass('active');
-			$this.closest('.probootstrap-feature-showcase').find('.probootstrap-images-list li').eq(index).addClass('active');
-
-			e.preventDefault();
-
-		});
-
-	};
-
-	var contentWayPoint = function() {
-		var i = 0;
-		jQuery('.probootstrap-animate').waypoint( function( direction ) {
-
-			if( direction === 'down' && !jQuery(this.element).hasClass('probootstrap-animated') ) {
-				
-				i++;
-
-				jQuery(this.element).addClass('item-animate');
-				setTimeout(function(){
-
-					jQuery('body .probootstrap-animate.item-animate').each(function(k){
-						var el = jQuery(this);
-						setTimeout( function () {
-							var effect = el.data('animate-effect');
-							if ( effect === 'fadeIn') {
-								el.addClass('fadeIn probootstrap-animated');
-							} else if ( effect === 'fadeInLeft') {
-								el.addClass('fadeInLeft probootstrap-animated');
-							} else if ( effect === 'fadeInRight') {
-								el.addClass('fadeInRight probootstrap-animated');
-							} else {
-								el.addClass('fadeInUp probootstrap-animated');
-							}
-							el.removeClass('item-animate');
-						},  k * 30, 'easeInOutExpo' );
-					});
-					
-				}, 100);
-				
-			}
-
-		} , { offset: '95%' } );
-	};
-
-	var navbarState = function() {
-
-		jQuery(window).scroll(function(){
-
-			var $this = jQuery(this),
-				 	st = $this.scrollTop();
-
-			if ( st > 5 ) {
-				jQuery('.probootstrap-navbar').addClass('scrolled');
-			} else {
-				jQuery('.probootstrap-navbar').removeClass('scrolled');
-			}
-
-		});
-	};
-
-	
-	var initPhotoSwipeFromDOM = function(gallerySelector) {
-
-    // parse slide data (url, title, size ...) from DOM elements 
-    // (children of gallerySelector)
-    var parseThumbnailElements = function(el) {
-        var thumbElements = el.childNodes,
-            numNodes = thumbElements.length,
-            items = [],
-            figureEl,
-            linkEl,
-            size,
-            item;
-
-        for(var i = 0; i < numNodes; i++) {
-
-            figureEl = thumbElements[i]; // <figure> element
-
-            // include only element nodes 
-            if(figureEl.nodeType !== 1) {
-                continue;
-            }
-
-            linkEl = figureEl.children[0]; // <a> element
-            console.log(figureEl);
-            size = linkEl.getAttribute('data-size').split('x');
-
-            // create slide object
-            item = {
-                src: linkEl.getAttribute('href'),
-                w: parseInt(size[0], 10),
-                h: parseInt(size[1], 10)
-            };
+  Custom JS
 
 
+  1. CARTBOX
+  2. TOOLTIP
+  3. PRODUCT VIEW SLIDER
+  4. POPULAR PRODUCT SLIDER (SLICK SLIDER)
+  5. FEATURED PRODUCT SLIDER (SLICK SLIDER)
+  6. LATEST PRODUCT SLIDER (SLICK SLIDER)
+  7. TESTIMONIAL SLIDER (SLICK SLIDER)
+  8. CLIENT BRAND SLIDER (SLICK SLIDER)
+  9. PRICE SLIDER  (noUiSlider SLIDER)
+  10. SCROLL TOP BUTTON
+  11. PRELOADER
+  12. GRID AND LIST LAYOUT CHANGER
+  13. RELATED ITEM SLIDER (SLICK SLIDER)
 
-            if(figureEl.children.length > 1) {
-                // <figcaption> content
-                item.title = figureEl.children[1].innerHTML; 
-            }
 
-            if(linkEl.children.length > 0) {
-                // <img> thumbnail element, retrieving thumbnail url
-                item.msrc = linkEl.children[0].getAttribute('src');
-            } 
+**/
 
-            item.el = figureEl; // save link to element for getThumbBoundsFn
-            items.push(item);
+jQuery(function($){
+
+
+  /* ----------------------------------------------------------- */
+  /*  1. CARTBOX
+  /* ----------------------------------------------------------- */
+
+     jQuery(".aa-cartbox").hover(function(){
+      jQuery(this).find(".aa-cartbox-summary").fadeIn(500);
+    }
+      ,function(){
+          jQuery(this).find(".aa-cartbox-summary").fadeOut(500);
+      }
+     );
+
+  /* ----------------------------------------------------------- */
+  /*  2. TOOLTIP
+  /* ----------------------------------------------------------- */
+    jQuery('[data-toggle="tooltip"]').tooltip();
+    jQuery('[data-toggle2="tooltip"]').tooltip();
+
+  /* ----------------------------------------------------------- */
+  /*  3. PRODUCT VIEW SLIDER
+  /* ----------------------------------------------------------- */
+
+    jQuery('#demo-1 .simpleLens-thumbnails-container img').simpleGallery({
+        loading_image: 'demo/images/loading.gif'
+    });
+
+    jQuery('#demo-1 .simpleLens-big-image').simpleLens({
+        loading_image: 'demo/images/loading.gif'
+    });
+
+  /* ----------------------------------------------------------- */
+  /*  4. POPULAR PRODUCT SLIDER (SLICK SLIDER)
+  /* ----------------------------------------------------------- */
+
+    jQuery('.aa-popular-slider').slick({
+      dots: false,
+      infinite: false,
+      speed: 300,
+      slidesToShow: 4,
+      slidesToScroll: 4,
+      responsive: [
+        {
+          breakpoint: 1024,
+          settings: {
+            slidesToShow: 3,
+            slidesToScroll: 3,
+            infinite: true,
+            dots: true
+          }
+        },
+        {
+          breakpoint: 600,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 2
+          }
+        },
+        {
+          breakpoint: 480,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1
+          }
         }
+        // You can unslick at a given breakpoint now by adding:
+        // settings: "unslick"
+        // instead of a settings object
+      ]
+    });
 
-        return items;
-    };
 
-    // find nearest parent element
-    var closest = function closest(el, fn) {
-        return el && ( fn(el) ? el : closest(el.parentNode, fn) );
-    };
+  /* ----------------------------------------------------------- */
+  /*  5. FEATURED PRODUCT SLIDER (SLICK SLIDER)
+  /* ----------------------------------------------------------- */
 
-    // triggers when user clicks on thumbnail
-    var onThumbnailsClick = function(e) {
-        e = e || window.event;
-        e.preventDefault ? e.preventDefault() : e.returnValue = false;
+    jQuery('.aa-featured-slider').slick({
+        dots: false,
+        infinite: false,
+        speed: 300,
+        slidesToShow: 4,
+        slidesToScroll: 4,
+        responsive: [
+          {
+            breakpoint: 1024,
+            settings: {
+              slidesToShow: 3,
+              slidesToScroll: 3,
+              infinite: true,
+              dots: true
+            }
+          },
+          {
+            breakpoint: 600,
+            settings: {
+              slidesToShow: 2,
+              slidesToScroll: 2
+            }
+          },
+          {
+            breakpoint: 480,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1
+            }
+          }
+          // You can unslick at a given breakpoint now by adding:
+          // settings: "unslick"
+          // instead of a settings object
+        ]
+    });
 
-        var eTarget = e.target || e.srcElement;
+  /* ----------------------------------------------------------- */
+  /*  6. LATEST PRODUCT SLIDER (SLICK SLIDER)
+  /* ----------------------------------------------------------- */
+    jQuery('.aa-latest-slider').slick({
+        dots: false,
+        infinite: false,
+        speed: 300,
+        slidesToShow: 4,
+        slidesToScroll: 4,
+        responsive: [
+          {
+            breakpoint: 1024,
+            settings: {
+              slidesToShow: 3,
+              slidesToScroll: 3,
+              infinite: true,
+              dots: true
+            }
+          },
+          {
+            breakpoint: 600,
+            settings: {
+              slidesToShow: 2,
+              slidesToScroll: 2
+            }
+          },
+          {
+            breakpoint: 480,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1
+            }
+          }
+          // You can unslick at a given breakpoint now by adding:
+          // settings: "unslick"
+          // instead of a settings object
+        ]
+    });
 
-        // find root element of slide
-        var clickedListItem = closest(eTarget, function(el) {
-            return (el.tagName && el.tagName.toUpperCase() === 'FIGURE');
+  /* ----------------------------------------------------------- */
+  /*  7. TESTIMONIAL SLIDER (SLICK SLIDER)
+  /* ----------------------------------------------------------- */
+
+    jQuery('.aa-testimonial-slider').slick({
+      dots: true,
+      infinite: true,
+      arrows: false,
+      speed: 300,
+      slidesToShow: 1,
+      adaptiveHeight: true
+    });
+
+  /* ----------------------------------------------------------- */
+  /*  8. CLIENT BRAND SLIDER (SLICK SLIDER)
+  /* ----------------------------------------------------------- */
+
+    jQuery('.aa-client-brand-slider').slick({
+        dots: false,
+        infinite: false,
+        speed: 300,
+        autoplay: true,
+        autoplaySpeed: 2000,
+        slidesToShow: 5,
+        slidesToScroll: 1,
+        responsive: [
+          {
+            breakpoint: 1024,
+            settings: {
+              slidesToShow: 4,
+              slidesToScroll: 4,
+              infinite: true,
+              dots: true
+            }
+          },
+          {
+            breakpoint: 600,
+            settings: {
+              slidesToShow: 2,
+              slidesToScroll: 2
+            }
+          },
+          {
+            breakpoint: 480,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1
+            }
+          }
+          // You can unslick at a given breakpoint now by adding:
+          // settings: "unslick"
+          // instead of a settings object
+        ]
+    });
+
+  /* ----------------------------------------------------------- */
+  /*  9. PRICE SLIDER  (noUiSlider SLIDER)
+  /* ----------------------------------------------------------- */
+
+    jQuery(function(){
+      if($('body').is('.productPage')){
+       var skipSlider = document.getElementById('skipstep');
+        noUiSlider.create(skipSlider, {
+            range: {
+                'min': 0,
+                '10%': 10,
+                '20%': 20,
+                '30%': 30,
+                '40%': 40,
+                '50%': 50,
+                '60%': 60,
+                '70%': 70,
+                '80%': 80,
+                '90%': 90,
+                'max': 100
+            },
+            snap: true,
+            connect: true,
+            start: [20, 70]
         });
+        // for value print
+        var skipValues = [
+          document.getElementById('skip-value-lower'),
+          document.getElementById('skip-value-upper')
+        ];
 
-        if(!clickedListItem) {
-            return;
+        skipSlider.noUiSlider.on('update', function( values, handle ) {
+          skipValues[handle].innerHTML = values[handle];
+        });
+      }
+    });
+
+
+
+  /* ----------------------------------------------------------- */
+  /*  10. SCROLL TOP BUTTON
+  /* ----------------------------------------------------------- */
+
+  //Check to see if the window is top if not then display button
+
+    jQuery(window).scroll(function(){
+      if ($(this).scrollTop() > 300) {
+        $('.scrollToTop').fadeIn();
+      } else {
+        $('.scrollToTop').fadeOut();
+      }
+    });
+
+    //Click event to scroll to top
+
+    jQuery('.scrollToTop').click(function(){
+      $('html, body').animate({scrollTop : 0},800);
+      return false;
+    });
+
+  /* ----------------------------------------------------------- */
+  /*  11. PRELOADER
+  /* ----------------------------------------------------------- */
+
+    jQuery(window).load(function() { // makes sure the whole site is loaded
+      jQuery('#wpf-loader-two').delay(200).fadeOut('slow'); // will fade out
+    })
+
+  /* ----------------------------------------------------------- */
+  /*  12. GRID AND LIST LAYOUT CHANGER
+  /* ----------------------------------------------------------- */
+
+  jQuery("#list-catg").click(function(e){
+    e.preventDefault(e);
+    jQuery(".aa-product-catg").addClass("list");
+  });
+  jQuery("#grid-catg").click(function(e){
+    e.preventDefault(e);
+    jQuery(".aa-product-catg").removeClass("list");
+  });
+
+
+  /* ----------------------------------------------------------- */
+  /*  13. RELATED ITEM SLIDER (SLICK SLIDER)
+  /* ----------------------------------------------------------- */
+
+    jQuery('.aa-related-item-slider').slick({
+      dots: false,
+      infinite: false,
+      speed: 300,
+      slidesToShow: 4,
+      slidesToScroll: 4,
+      responsive: [
+        {
+          breakpoint: 1024,
+          settings: {
+            slidesToShow: 3,
+            slidesToScroll: 3,
+            infinite: true,
+            dots: true
+          }
+        },
+        {
+          breakpoint: 600,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 2
+          }
+        },
+        {
+          breakpoint: 480,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1
+          }
         }
+        // You can unslick at a given breakpoint now by adding:
+        // settings: "unslick"
+        // instead of a settings object
+      ]
+    });
 
-        // find index of clicked item by looping through all child nodes
-        // alternatively, you may define index via data- attribute
-        var clickedGallery = clickedListItem.parentNode,
-            childNodes = clickedListItem.parentNode.childNodes,
-            numChildNodes = childNodes.length,
-            nodeIndex = 0,
-            index;
+});
 
-        for (var i = 0; i < numChildNodes; i++) {
-            if(childNodes[i].nodeType !== 1) { 
-                continue; 
-            }
-
-            if(childNodes[i] === clickedListItem) {
-                index = nodeIndex;
-                break;
-            }
-            nodeIndex++;
-        }
-
-
-
-        if(index >= 0) {
-            // open PhotoSwipe if valid index found
-            openPhotoSwipe( index, clickedGallery );
-        }
-        return false;
-    };
-
-    // parse picture index and gallery index from URL (#&pid=1&gid=2)
-    var photoswipeParseHash = function() {
-        var hash = window.location.hash.substring(1),
-        params = {};
-
-        if(hash.length < 5) {
-            return params;
-        }
-
-        var vars = hash.split('&');
-        for (var i = 0; i < vars.length; i++) {
-            if(!vars[i]) {
-                continue;
-            }
-            var pair = vars[i].split('=');  
-            if(pair.length < 2) {
-                continue;
-            }           
-            params[pair[0]] = pair[1];
-        }
-
-        if(params.gid) {
-            params.gid = parseInt(params.gid, 10);
-        }
-
-        return params;
-    };
-
-    var openPhotoSwipe = function(index, galleryElement, disableAnimation, fromURL) {
-		  var pswpElement = document.querySelectorAll('.pswp')[0],
-		      gallery,
-		      options,
-		      items;
-
-		  items = parseThumbnailElements(galleryElement);
-
-		  // define options (if needed)
-		  options = {
-
-		      // define gallery index (for URL)
-		      galleryUID: galleryElement.getAttribute('data-pswp-uid'),
-
-		      getThumbBoundsFn: function(index) {
-		          // See Options -> getThumbBoundsFn section of documentation for more info
-		          var thumbnail = items[index].el.getElementsByTagName('img')[0], // find thumbnail
-		              pageYScroll = window.pageYOffset || document.documentElement.scrollTop,
-		              rect = thumbnail.getBoundingClientRect(); 
-
-		          return {x:rect.left, y:rect.top + pageYScroll, w:rect.width};
-		      }
-
-		  };
-
-		  // PhotoSwipe opened from URL
-		  if(fromURL) {
-		      if(options.galleryPIDs) {
-		          // parse real index when custom PIDs are used 
-		          // http://photoswipe.com/documentation/faq.html#custom-pid-in-url
-		          for(var j = 0; j < items.length; j++) {
-		              if(items[j].pid == index) {
-		                  options.index = j;
-		                  break;
-		              }
-		          }
-		      } else {
-		          // in URL indexes start from 1
-		          options.index = parseInt(index, 10) - 1;
-		      }
-		  } else {
-		      options.index = parseInt(index, 10);
-		  }
-
-		  // exit if index not found
-		  if( isNaN(options.index) ) {
-		      return;
-		  }
-
-		  if(disableAnimation) {
-		      options.showAnimationDuration = 0;
-		  }
-
-		  // Pass data to PhotoSwipe and initialize it
-		  gallery = new PhotoSwipe( pswpElement, PhotoSwipeUI_Default, items, options);
-		  gallery.init();
-		};
-
-		// loop through all gallery elements and bind events
-		var galleryElements = document.querySelectorAll( gallerySelector );
-
-		for(var i = 0, l = galleryElements.length; i < l; i++) {
-		  galleryElements[i].setAttribute('data-pswp-uid', i+1);
-		  galleryElements[i].onclick = onThumbnailsClick;
-		}
-
-		// Parse URL and open gallery if it contains #&pid=3&gid=1
-		var hashData = photoswipeParseHash();
-		if(hashData.pid && hashData.gid) {
-		  openPhotoSwipe( hashData.pid ,  galleryElements[ hashData.gid - 1 ], true, true );
-		}
-	};
-
-	var galleryMasonry = function() {
-		// isotope 
-		if ($('.portfolio-feed').length > 0 ) {
-			var $container = $('.portfolio-feed');
-			$container.imagesLoaded(function() {
-				$container.isotope({
-				  itemSelector: '.grid-item',
-				  percentPosition: true,
-				  masonry: {
-				    columnWidth: '.grid-sizer',
-				    gutter: '.gutter-sizer'
-				  }
-				});
-			});
-		}
-
-		// $('.portfolio-filter a').click(function(event){
-			
-		// 	$('.portfolio-filter .current').removeClass('current');
-		// 	$(this).addClass('current');
-
-		// 	var selector = $(this).attr('data-filter');
-			
-		// 	$container.isotope({
-		// 		filter: selector,
-		// 	});
-
-		// 	event.preventDefault();
-		// 	return false;
-
-		// });
-	};
-
-	jQuery(function(){
-		menuHover();
-		showcase();
-		contentWayPoint();
-		navbarState();
-		if ($('.probootstrap-gallery').length > 0) {
-			initPhotoSwipeFromDOM('.probootstrap-gallery');
-		}
-		galleryMasonry();
-	});
-
-	jQuery(window).load(function(){
-		owlCarousel();
-		flexSlider();
-
-	});
-
-})();
