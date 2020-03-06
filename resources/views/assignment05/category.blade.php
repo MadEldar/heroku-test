@@ -12,7 +12,7 @@
             <div class="aa-catg-head-banner-content">
                 <h2>Fashion</h2>
                 <ol class="breadcrumb">
-                    <li><a href="/blog/public/">Home</a></li>
+                    <li><a href="/blog/public/assignment05">Home</a></li>
                     <li class="active">{{ $category->category_name }}</li>
                 </ol>
             </div>

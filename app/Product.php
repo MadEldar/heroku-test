@@ -19,7 +19,7 @@ class Product extends Model
     ];
 
     public static function getProductWithCategory($proId) {
-        return json_decode(Product::find($proId)
+        return json_decode(Product::where('products.id', $proId)
             ->join('categories', 'products.category_id', '=', 'categories.id')
             ->join('brands', 'products.brand_id', '=', 'brands.id')
             ->select('products.*', 'categories.category_name', 'brands.brand_name')
