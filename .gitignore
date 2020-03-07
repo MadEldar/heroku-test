@@ -15,4 +15,4 @@ package-lock.json
 composer.lock
 
 #my
-/config/database.php
+config/
