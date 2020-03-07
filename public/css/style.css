@@ -4202,3 +4202,15 @@ img {
     object-fit: cover;
     opacity: .65;
 }
+
+.simpleLens-big-image {
+    width: 250px;
+    height: 300px;
+    object-fit: contain;
+}
+
+.simpleLens-thumbnails-container a img {
+    width: 45px;
+    height: 55px;
+    object-fit: contain;
+}

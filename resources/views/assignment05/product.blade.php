@@ -43,17 +43,18 @@
                                 <div class="aa-product-view-slider">
                                     <div id="demo-1" class="simpleLens-gallery-container">
                                         <div class="simpleLens-container">
-                                            <div class="simpleLens-big-image-container"><a data-lens-image="/blog/public/img/view-slider/large/polo-shirt-1.png" class="simpleLens-lens-image"><img src="/blog/public/img/view-slider/medium/polo-shirt-1.png" class="simpleLens-big-image"></a></div>
+                                            <div class="simpleLens-big-image-container">
+                                                <a data-lens-image="{{ $product->product_thumbnail }}" class="simpleLens-lens-image">
+                                                    <img src="{{ $product->product_thumbnail }}" class="simpleLens-big-image">
+                                                </a>
+                                            </div>
                                         </div>
                                         <div class="simpleLens-thumbnails-container">
-                                            <a data-big-image="/blog/public/img/view-slider/medium/polo-shirt-1.png" data-lens-image="/blog/public/img/view-slider/large/polo-shirt-1.png" class="simpleLens-thumbnail-wrapper" href="#">
-                                                <img src="{{ asset('img/view-slider/thumbnail/polo-shirt-1.png') }}">
+                                            <a data-big-image="{{ $product->product_thumbnail }}" data-lens-image="{{ $product->product_thumbnail }}" class="simpleLens-thumbnail-wrapper">
+                                                <img src="{{ $product->product_thumbnail }}">
                                             </a>
-                                            <a data-big-image="/blog/public/img/view-slider/medium/polo-shirt-3.png" data-lens-image="/blog/public/img/view-slider/large/polo-shirt-3.png" class="simpleLens-thumbnail-wrapper" href="#">
-                                                <img src="{{ asset('img/view-slider/thumbnail/polo-shirt-3.png') }}">
-                                            </a>
-                                            <a data-big-image="/blog/public/img/view-slider/medium/polo-shirt-4.png" data-lens-image="/blog/public/img/view-slider/large/polo-shirt-4.png" class="simpleLens-thumbnail-wrapper" href="#">
-                                                <img src="{{ asset('img/view-slider/thumbnail/polo-shirt-4.png') }}">
+                                            <a data-big-image="{{ $product->product_gallery }}" data-lens-image="{{ $product->product_gallery }}" class="simpleLens-thumbnail-wrapper">
+                                                <img src="{{ $product->product_gallery }}">
                                             </a>
                                         </div>
                                     </div>
