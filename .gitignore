@@ -3,7 +3,7 @@
 /public/storage
 /storage/*.key
 /vendor
-#.env
+.env
 .env.backup
 .phpunit.result.cache
 Homestead.json
@@ -13,3 +13,6 @@ yarn-error.log
 .idea
 package-lock.json
 composer.lock
+
+#my
+/config/database.php
