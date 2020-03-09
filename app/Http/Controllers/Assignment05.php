@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Brand;
 use App\Category;
 use App\Product;
 use Illuminate\Support\Facades\DB;
@@ -39,20 +40,34 @@ class Assignment05 extends Controller
         ]);
     }
 
-    public function category($catId) {
-        $category = Category::getAllProducts($catId);
-        $top_5 = Category::take(5)
-            ->where('id', '!=', $catId)
+    public function search() {
+        if (isset($_GET['cat'])) {
+            $id = $_GET['cat'];
+            $result = Category::getProducts($id, 21);
+        } else if (isset($_GET['brand'])) {
+            $id = $_GET['brand'];
+            $result = Brand::getProducts($id, 21);
+        }
+        $cat = Category::take(5)
+            ->withCount('Products')
+            ->orderBy('products_count', 'desc')
             ->get();
-        return view('assignment05/category', [
-            'title' => $category->category_name . ' - Category',
-            'category' => $category,
-            'top_5' => $top_5
+        $brand = Brand::take(5)
+            ->withCount('Products')
+            ->orderBy('products_count', 'desc')
+            ->get();
+        return view('assignment05/search', [
+            'title' => $result->name . ' - Category',
+            'result' => $result,
+            'top_5' => [
+                'cat' => $cat,
+                'brand' => $brand
+            ]
         ]);
     }
 
     public function product($proId) {
-        $product = Product::getProductWithCategory($proId);
+        $product = Product::where('id', $proId)->get()[0];
         $same_brand = Product::where('brand_id', $product->brand_id)
             ->where('id', '!=', $proId)
             ->take(8)

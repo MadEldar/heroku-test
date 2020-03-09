@@ -24,6 +24,8 @@ class CreateProduct extends Migration
             $table->unsignedBigInteger('quantity');
             $table->decimal('price', 12, 4);
             $table->timestamps();
+            $table->foreign('category_id')->references('id')->on('categories');
+            $table->foreign('brand_id')->references('id')->on('brands');
         });
     }
 

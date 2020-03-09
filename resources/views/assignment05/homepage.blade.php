@@ -20,7 +20,7 @@
                             <span data-seq>Save Up to 75% Off</span>
                             <h2 data-seq>{{ $cat['name'] }}</h2>
                             <p data-seq>{{ $cat['description'] }}</p>
-                            <a data-seq href="{{ url("/assignment05/category/$cat[id]") }}" class="aa-shop-now-btn aa-secondary-btn">SHOP NOW</a>
+                            <a data-seq href="{{ url("/assignment05/search?cat=$cat[id]") }}" class="aa-shop-now-btn aa-secondary-btn">SHOP NOW</a>
                         </div>
                     </li>
                     @endforeach
@@ -51,7 +51,7 @@
                                     <img src="{{ $first['thumbnail'] }}" alt="img">
                                     <div class="aa-prom-content">
                                         <span>75% Off</span>
-                                        <h4><a href="{{ url("/assignment05/category/$first[id]") }}">{{ $first['name'] }}</a></h4>
+                                        <h4><a href="{{ url("/assignment05/search?cat=$first[id]") }}">{{ $first['name'] }}</a></h4>
                                     </div>
                                 </div>
                             </div>
@@ -65,7 +65,7 @@
                                             <img src="{{ $cat['thumbnail'] }}" alt="img">
                                             <div class="aa-prom-content">
                                                 <span>Exclusive Item</span>
-                                                <h4><a href="{{ url("/assignment05/category/$cat[id]") }}">{{ $cat['name'] }}</a></h4>
+                                                <h4><a href="{{ url("/assignment05/search?cat=$cat[id]") }}">{{ $cat['name'] }}</a></h4>
                                             </div>
                                         </div>
                                     </div>

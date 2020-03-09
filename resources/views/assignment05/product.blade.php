@@ -18,8 +18,8 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ url("/assignment05/category/$product->category_id") }}">
-                            {{ $product->category_name }}
+                        <a href="{{ url("/assignment05/search?cat=$product->category_id") }}">
+                            {{ $product->Category->category_name }}
                         </a>
                     </li>
                     <li class="active">{{ $product->product_name }}</li>
@@ -104,7 +104,7 @@
                                             </select>
                                         </form>
                                         <p class="aa-prod-category">
-                                            Brand: <a href="#">{{ $product->brand_name }}</a>
+                                            Brand: <a href="{{ url("/assignment05/search?brand=$product->brand_id") }}">{{ $product->Brand->brand_name }}</a>
                                         </p>
                                     </div>
                                     <div class="aa-prod-view-bottom">
@@ -204,7 +204,7 @@
                     </div>
                     <!-- Related product -->
                     <div class="aa-product-related-item">
-                        <h3>Same Brand</h3>
+                        <h3>From <a href="{{ url("/assignment05/search?brand=$product->brand_id") }}" style="color: #ff6666">{{ $product->Brand->brand_name }}</a></h3>
                         <ul class="aa-product-catg aa-related-item-slider">
                             @foreach($same_brand as $pro)
                             <!-- start single product item -->
@@ -312,7 +312,7 @@
                     </div>
                     <!-- Related product -->
                     <div class="aa-product-related-item">
-                        <h3>Same Category</h3>
+                        <h3>From <a href="{{ url("/assignment05/search?cat=$product->category_id") }}" style="color: #ff6666">{{ $product->Category->category_name }}</a></h3>
                         <ul class="aa-product-catg aa-related-item-slider">
                             @foreach($same_category as $pro)
                             <!-- start single product item -->

@@ -13,7 +13,7 @@
                 <h2>Fashion</h2>
                 <ol class="breadcrumb">
                     <li><a href="{{ url('/assignment05') }}">Home</a></li>
-                    <li class="active">{{ $category->category_name }}</li>
+                    <li class="active">{{ $result->name }}</li>
                 </ol>
             </div>
         </div>
@@ -54,7 +54,7 @@
                     </div>
                     <div class="aa-product-catg-body">
                         <ul class="aa-product-catg">
-                            @foreach($category->products as $pro)
+                            @foreach($result->products as $pro)
                                 <!-- start single product item -->
                                     <li>
                                         <figure>
@@ -186,10 +186,27 @@
                 <aside class="aa-sidebar">
                     <!-- single sidebar -->
                     <div class="aa-sidebar-widget">
-                        <h3>Category</h3>
+                        <h3>Categories</h3>
                         <ul class="aa-catg-nav">
-                            @foreach($top_5 as $cat)
-                                <li><a href="{{ url("/assignment05/category?cat=$cat->id") }}">{{ $cat->category_name }}</a></li>
+                            @foreach($top_5['cat'] as $cat)
+                                <li>
+                                    <a  @if($cat->category_name === $result->name) style="color: #ff6666" @else  href="{{ url("/assignment05/search?cat=$cat->id") }}" @endif>
+                                        {{ $cat->category_name }}
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    <!-- single sidebar -->
+                    <div class="aa-sidebar-widget">
+                        <h3>Brands</h3>
+                        <ul class="aa-catg-nav">
+                            @foreach($top_5['brand'] as $brand)
+                                <li>
+                                    <a  @if($brand->brand_name === $result->name) style="color: #ff6666" @else  href="{{ url("/assignment05/search?brand=$brand->id") }}" @endif>
+                                        {{ $brand->brand_name }}
+                                    </a>
+                                </li>
                             @endforeach
                         </ul>
                     </div>

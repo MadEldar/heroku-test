@@ -18,11 +18,11 @@ class Product extends Model
         'price'
     ];
 
-    public static function getProductWithCategory($proId) {
-        return json_decode(Product::where('products.id', $proId)
-            ->join('categories', 'products.category_id', '=', 'categories.id')
-            ->join('brands', 'products.brand_id', '=', 'brands.id')
-            ->select('products.*', 'categories.category_name', 'brands.brand_name')
-            ->get()[0]);
+    public function Brand() {
+        return $this->belongsTo("\App\Brand");
+    }
+
+    public function Category() {
+        return $this->belongsTo("\App\Category");
     }
 }
