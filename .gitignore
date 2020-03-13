@@ -3,6 +3,7 @@
 /public/storage
 /storage/*.key
 /vendor
+/config
 .env
 .env.backup
 .phpunit.result.cache
@@ -13,5 +14,3 @@ yarn-error.log
 .idea
 package-lock.json
 composer.lock
-
-config

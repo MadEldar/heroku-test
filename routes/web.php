@@ -1,5 +1,7 @@
 <?php
 
+Route::prefix('admin', include_once("admin.php"));
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
