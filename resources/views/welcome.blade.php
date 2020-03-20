@@ -87,6 +87,10 @@
                 <div class="links">
                     <a href="{{ url('/assignment05') }}">Assignment 05</a>
                 </div>
+
+                <div class="links">
+                    <a href="{{ url('/admin/home') }}">Admin</a>
+                </div>
             </div>
         </div>
     </body>

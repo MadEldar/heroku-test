@@ -30,7 +30,6 @@
 </section>
 <!-- / catg header banner section -->
 
-<!-- product category -->
 <section id="aa-product-details">
     <div class="container">
         <div class="row">
@@ -62,7 +61,8 @@
                             </div>
                             <!-- Modal view content -->
                             <div class="col-md-7 col-sm-7 col-xs-12">
-                                <div class="aa-product-view-content">
+                                <form class="aa-product-view-content" action="{{ url('/user/add-cart') }}" method="post">
+                                    @csrf
                                     <h3>{{ $product->product_name }}</h3>
                                     <div class="aa-price-block">
                                         <span class="aa-product-view-price">${{ number_format($product->price, 2) }}</span>
@@ -93,29 +93,32 @@
                                         <a href="#" class="aa-color-white"></a>
                                     </div>
                                     <div class="aa-prod-quantity">
-                                        <form action="">
-                                            <select id="" name="">
-                                                <option selected="1" value="0">1</option>
-                                                <option value="1">2</option>
-                                                <option value="2">3</option>
-                                                <option value="3">4</option>
-                                                <option value="4">5</option>
-                                                <option value="5">6</option>
-                                            </select>
-                                        </form>
+                                        <input type="number" name="quantity" style="width: 10%" value="0">
                                         <p class="aa-prod-category">
                                             Brand: <a href="{{ url("/assignment05/search?brand=$product->brand_id") }}">{{ $product->Brand->brand_name }}</a>
                                         </p>
                                     </div>
                                     <div class="aa-prod-view-bottom">
-                                        <a class="aa-add-to-cart-btn" href="#">Add To Cart</a>
+                                        <input type="hidden" name="id" value="{{ $product->id }}">
+                                        <button class="aa-add-to-cart-btn" style="background-color: white" type="submit">Add To Cart</button>
                                         <a class="aa-add-to-cart-btn" href="#">Wishlist</a>
                                         <a class="aa-add-to-cart-btn" href="#">Compare</a>
                                     </div>
-                                </div>
+                                </form>
                             </div>
                         </div>
                     </div>
+
+                    @if ($errors->any())
+                        <div class="alert alert-danger px-3 py-1">
+                            @foreach ($errors->all() as $error)
+                                <h5 class="m-0">{{ $error }}</h5>
+                            @endforeach
+                        </div>
+                @endif
+
+                <!-- product category -->
+
                     <div class="aa-product-details-bottom">
                         <ul class="nav nav-tabs" id="myTab2">
                             <li><a href="#description" data-toggle="tab">Description</a></li>

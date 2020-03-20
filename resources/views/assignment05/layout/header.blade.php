@@ -24,12 +24,12 @@
                             <div class="aa-language">
                                 <div class="dropdown">
                                     <a class="btn dropdown-toggle" href="#" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                        <img src="img/flag/english.jpg" alt="english flag">ENGLISH
+                                        <img src="{{ asset('img/flag/english.jpg') }}" alt="english flag">ENGLISH
                                         <span class="caret"></span>
                                     </a>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                        <li><a href="#"><img src="img/flag/french.jpg" alt="">FRENCH</a></li>
-                                        <li><a href="#"><img src="img/flag/english.jpg" alt="">ENGLISH</a></li>
+                                        <li><a href="#"><img src="{{ asset('img/flag/french.jpg') }}" alt="">FRENCH</a></li>
+                                        <li><a href="#"><img src="{{ asset('img/flag/english.jpg') }}" alt="">ENGLISH</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -59,10 +59,14 @@
                         <div class="aa-header-top-right">
                             <ul class="aa-head-top-nav-right">
                                 <li><a href="account.html">My Account</a></li>
-                                <li class="hidden-xs"><a href="wishlist.html">Wishlist</a></li>
-                                <li class="hidden-xs"><a href="cart.html">My Cart</a></li>
-                                <li class="hidden-xs"><a href="checkout.html">Checkout</a></li>
-                                <li><a href="" data-toggle="modal" data-target="#login-modal">Login</a></li>
+                                <li class="hidden-xs"><a href="{{ url('/user/orders') }}">Order</a></li>
+                                <li class="hidden-xs"><a href="{{ url('/user/cart') }}">My Cart</a></li>
+                                <li class="hidden-xs"><a href="{{ url('/user/checkout') }}">Checkout</a></li>
+                                @if(\Illuminate\Support\Facades\Auth::check())
+                                    <li><a href="{{ url('/assignment05/sign-out') }}">Sign out</a></li>
+                                @else
+                                    <li><a href="{{ url('/assignment05/sign-in') }}">Sign in</a></li>
+                                @endif
                             </ul>
                         </div>
                     </div>
@@ -99,7 +103,7 @@
                             <div class="aa-cartbox-summary">
                                 <ul>
                                     <li>
-                                        <a class="aa-cartbox-img" href="#"><img src="img/woman-small-2.jpg" alt="img"></a>
+                                        <a class="aa-cartbox-img" href="#"><img src="{{ asset('img/woman-small-2.jpg') }}" alt="img"></a>
                                         <div class="aa-cartbox-info">
                                             <h4><a href="#">Product Name</a></h4>
                                             <p>1 x $250</p>
@@ -107,7 +111,7 @@
                                         <a class="aa-remove-product" href="#"><span class="fa fa-times"></span></a>
                                     </li>
                                     <li>
-                                        <a class="aa-cartbox-img" href="#"><img src="img/woman-small-1.jpg" alt="img"></a>
+                                        <a class="aa-cartbox-img" href="#"><img src="{{ asset('img/woman-small-1.jpg') }}" alt="img"></a>
                                         <div class="aa-cartbox-info">
                                             <h4><a href="#">Product Name</a></h4>
                                             <p>1 x $250</p>
@@ -115,12 +119,8 @@
                                         <a class="aa-remove-product" href="#"><span class="fa fa-times"></span></a>
                                     </li>
                                     <li>
-                      <span class="aa-cartbox-total-title">
-                        Total
-                      </span>
-                                        <span class="aa-cartbox-total-price">
-                        $500
-                      </span>
+                                        <span class="aa-cartbox-total-title">Total</span>
+                                        <span class="aa-cartbox-total-price">$500</span>
                                     </li>
                                 </ul>
                                 <a class="aa-cartbox-checkout aa-primary-btn" href="checkout.html">Checkout</a>

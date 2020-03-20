@@ -26,9 +26,11 @@
                             <li class="breadcrumb-item active">Category</li>
                         </ol>
                     </div>
-                    @if(isset($errors) && $errors->has('category_name'))
+                    @if ($errors->any())
                         <div class="alert alert-danger px-3 py-1">
-                            <h5 class="m-0">{{ $errors->first('category_name') }}</h5>
+                            @foreach ($errors->all() as $error)
+                                <h5 class="m-0">{{ $error }}</h5>
+                            @endforeach
                         </div>
                     @endif
                 </div>
@@ -64,7 +66,10 @@
                                     <td data-target="category_name">{{ $cat->category_name }}</td>
                                     <td>{{ $cat->created_at }}</td>
                                     <td>{{ $cat->updated_at }}</td>
-                                    <td><a data-toggle="modal" data-target="#modal-edit-cat">Edit</a></td>
+                                    <td class="d-flex justify-content-around">
+                                        <a data-toggle="modal" data-target="#modal-edit-cat"><i class="far fa-edit"></i></a>
+                                        <a data-toggle="modal" data-target="#modal-delete-cat"><i class="far fa-trash-alt"></i></a>
+                                    </td>
                                 </tr>
                                 @empty
                                     <p>Không có cột</p>
@@ -131,6 +136,31 @@
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary">Edit</button>
+                </div>
+            </form>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
+    <div class="modal fade" id="modal-delete-cat">
+        <div class="modal-dialog modal-lg">
+            <form class="modal-content" action="{{ url('/admin/categories/delete') }}" method="post">
+                @csrf
+                <div class="modal-header">
+                    <h4 class="modal-title">Delete category</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete this category?
+                    <input type="hidden" name="id">
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger">Delete</button>
                 </div>
             </form>
             <!-- /.modal-content -->

@@ -3,7 +3,6 @@
 @include('assignment05/layout/head')
 <body>
 @include('assignment05/layout/header')
-
 <!-- Start slider -->
 <section id="aa-slider">
     <div class="aa-slider-area">

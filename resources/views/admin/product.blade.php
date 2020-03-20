@@ -80,7 +80,10 @@
                                     <td data-target="price" class="number">{{ number_format($pro->price, 2) }}</td>
                                     <td>{{ $pro->created_at }}</td>
                                     <td>{{ $pro->updated_at }}</td>
-                                    <td><a data-toggle="modal" data-target="#modal-edit-product">Edit</a></td>
+                                    <td class="d-flex justify-content-around">
+                                        <a data-toggle="modal" data-target="#modal-edit-product"><i class="far fa-edit"></i></a>
+                                        <a data-toggle="modal" data-target="#modal-delete-product"><i class="far fa-trash-alt"></i></a>
+                                    </td>
                                 </tr>
                                 @empty
                                     <p>Không có cột</p>
@@ -129,11 +132,19 @@
                     </div>
                     <div class="form-group">
                         <label>Brand name</label>
-                        <input name="brand_name" class="form-control" placeholder="Enter brand name" value="{{ old('brand_name') }}">
+                        <select name="brand_id" class="form-control">
+                            @foreach($brands as $brand)
+                                <option value="{{ $brand->id }}">{{ $brand->brand_name }}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="form-group">
                         <label>Category name</label>
-                        <input name="category_name" class="form-control" placeholder="Enter category name" value="{{ old('category_name') }}">
+                        <select name="category_id" class="form-control">
+                            @foreach($categories as $category)
+                                <option value="{{ $category->id }}">{{ $category->category_name }}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="form-group">
                         <label>Quantity</label>
@@ -184,11 +195,19 @@
                     </div>
                     <div class="form-group">
                         <label>Brand name</label>
-                        <input name="brand_name" class="form-control" placeholder="Enter brand name" value="{{ old('brand_name') }}">
+                        <select name="brand_name" class="form-control">
+                            @foreach($brands as $brand)
+                                <option value="{{ $brand->brand_name }}">{{ $brand->brand_name }}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="form-group">
                         <label>Category name</label>
-                        <input name="category_name" class="form-control" placeholder="Enter category name" value="{{ old('category_name') }}">
+                        <select name="category_name" class="form-control">
+                            @foreach($categories as $category)
+                                <option value="{{ $category->category_name }}">{{ $category->category_name }}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="form-group">
                         <label>Quantity</label>
@@ -203,6 +222,31 @@
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary">Edit</button>
+                </div>
+            </form>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
+    <div class="modal fade" id="modal-delete-product">
+        <div class="modal-dialog modal-lg">
+            <form class="modal-content" action="{{ url('/admin/products/delete') }}" method="post">
+                @csrf
+                <div class="modal-header">
+                    <h4 class="modal-title">Delete product</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete this product?
+                    <input type="hidden" name="id">
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger">Delete</button>
                 </div>
             </form>
             <!-- /.modal-content -->

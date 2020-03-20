@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\Brand;
 use App\Category;
 use App\Product;
-use Illuminate\Support\Facades\DB;
-use mysqli;
+use App\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class Assignment05 extends Controller
 {
@@ -82,5 +83,58 @@ class Assignment05 extends Controller
             'same_brand' => $same_brand,
             'same_category' => $same_category,
         ]);
+    }
+
+    public function signIn() {
+        return view('assignment05/sign-in', [
+            'title' => 'Daily shop - Sign in'
+        ]);
+    }
+
+    public function signedIn(Request $req) {
+        $req->validate([
+            'email' => 'required',
+            'password' => 'required'
+        ]);
+        $user = User::where('email', $req->get('email'))->get()[0];
+        if ($user->email == $req->get('email') && $user->password == $req->get('password')) {
+            Auth::login($user, true);
+            return redirect()->to('/assignment05');
+        } else {
+            $errors = [
+                'Incorrect email or password'
+            ];
+            return redirect()->back()->withErrors($errors);
+        }
+    }
+
+    public function signUp(Request $req) {
+        return view('assignment05/sign-up', [
+            'title' => 'Daily shop - Sign up'
+        ]);
+    }
+
+    public function signedUp(Request $req)
+    {
+        $req->validate([
+            'email' => 'required|unique:users',
+            'name' => 'required',
+            'password' => 'required|same:confirmation',
+            'confirmation' => 'required'
+        ]);
+        User::create([
+            'name' => $req->get('name'),
+            'email' => $req->get('email'),
+            'password' => $req->get('password'),
+            'role' => 0,
+        ]);
+        return redirect()->to('/assignment05/sign-in');
+    }
+
+    public function signOut()
+    {
+        Auth::logout();
+        session()->flush();
+        return redirect()->back();
     }
 }
