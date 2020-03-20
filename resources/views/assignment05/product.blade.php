@@ -93,7 +93,7 @@
                                         <a href="#" class="aa-color-white"></a>
                                     </div>
                                     <div class="aa-prod-quantity">
-                                        <input type="number" name="quantity" style="width: 10%" value="0">
+                                        <input type="number" name="quantity" style="width: 10%" value="1">
                                         <p class="aa-prod-category">
                                             Brand: <a href="{{ url("/assignment05/search?brand=$product->brand_id") }}">{{ $product->Brand->brand_name }}</a>
                                         </p>
