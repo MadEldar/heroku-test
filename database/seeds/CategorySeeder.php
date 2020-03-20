@@ -11,7 +11,7 @@ class CategorySeeder extends Seeder
      */
     public function run()
     {
-        \Illuminate\Support\Facades\DB::statement("INSERT INTO laravel.categories (category_name,created_at,updated_at) VALUES
+        \Illuminate\Support\Facades\DB::statement("INSERT INTO categories (category_name,created_at,updated_at) VALUES
         ('Quincy Morar','2020-03-05 15:58:17.0','2020-03-05 15:58:17.0')
         ,('Elfrieda Runolfsdottir Sr.','2020-03-05 15:58:17.0','2020-03-05 15:58:17.0')
         ,('Nicolas Dicki','2020-03-05 15:58:17.0','2020-03-05 15:58:17.0')

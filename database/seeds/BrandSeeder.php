@@ -11,7 +11,7 @@ class BrandSeeder extends Seeder
      */
     public function run()
     {
-        \Illuminate\Support\Facades\DB::statement("INSERT INTO laravel.brands (brand_name,created_at,updated_at) VALUES
+        \Illuminate\Support\Facades\DB::statement("INSERT INTO brands (brand_name,created_at,updated_at) VALUES
         ('Dr. Caroline Corkery','2020-03-05 15:58:17.0','2020-03-05 15:58:17.0')
         ,('Allie Ullrich II','2020-03-05 15:58:17.0','2020-03-05 15:58:17.0')
         ,('Prof. Raven Hartmann III','2020-03-05 15:58:17.0','2020-03-05 15:58:17.0')
