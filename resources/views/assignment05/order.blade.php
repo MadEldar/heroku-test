@@ -51,7 +51,7 @@
                                                                     <p>First name:</p>
                                                                 </div>
                                                                 <div class="col-md-8">
-                                                                    <p>Mark</p>
+                                                                    <p>{{ $order->name_first }}</p>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -61,7 +61,7 @@
                                                                     <p>Last name:</p>
                                                                 </div>
                                                                 <div class="col-md-8">
-                                                                    <p>Mark</p>
+                                                                    <p>{{ $order->name_last }}</p>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -73,7 +73,7 @@
                                                                     <p>Company:</p>
                                                                 </div>
                                                                 <div class="col-md-9">
-                                                                    <p>Name</p>
+                                                                    <p>{{ $order->company }}</p>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -85,7 +85,7 @@
                                                                     <p>Email:</p>
                                                                 </div>
                                                                 <div class="col-md-8">
-                                                                    <p>Mark</p>
+                                                                    <p>{{ $order->email }}</p>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -95,7 +95,7 @@
                                                                     <p>Phone:</p>
                                                                 </div>
                                                                 <div class="col-md-8">
-                                                                    <p>Mark</p>
+                                                                    <p>{{ $order->phone }}</p>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -107,7 +107,7 @@
                                                                     <p>Address:</p>
                                                                 </div>
                                                                 <div class="col-md-9">
-                                                                    <p>Mark</p>
+                                                                    <p>{{ $order->shipping_address }}</p>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -119,7 +119,7 @@
                                                                     <p>Note:</p>
                                                                 </div>
                                                                 <div class="col-md-9">
-                                                                    <p>Mark</p>
+                                                                    <p>{{ $order->note }}</p>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -138,23 +138,19 @@
                                                                 </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                @forelse($order->Items as $key=>$pro)
-                                                                    @if(is_int($key))
-                                                                        <tr>
-                                                                            <td>
-                                                                                <a class="aa-cart-title" href="{{ url("/assignment05/product/$pro->id") }}"
-                                                                                   target="_blank">
-                                                                                    {{ \App\Product::select('product_name')->where('id', $pro->id)->get()[0]->product_name }}
-                                                                                </a>
-                                                                            </td>
-                                                                            <td>{{ number_format($pro->price, 2) }}</td>
-                                                                            <td>{{ $pro->quantity }}</td>
-                                                                            <td>${{ number_format($pro->quantity * $pro->price, 2) }}</td>
-                                                                        </tr>
-                                                                    @endif
-                                                                @empty
-                                                                    <p>There is no product in the cart</p>
-                                                                @endforelse
+                                                                @foreach($order->Items as $pro)
+                                                                    <tr>
+                                                                        <td>
+                                                                            <a class="aa-cart-title" href="{{ url("/assignment05/product/$pro->id") }}"
+                                                                               target="_blank">
+                                                                                {{ \App\Product::where('id', $pro->product_id)->select('product_name')->get()[0]->product_name }}
+                                                                            </a>
+                                                                        </td>
+                                                                        <td>{{ number_format($pro->price, 2) }}</td>
+                                                                        <td>{{ $pro->quantity }}</td>
+                                                                        <td>${{ number_format($pro->quantity * $pro->price, 2) }}</td>
+                                                                    </tr>
+                                                                @endforeach
                                                                 </tbody>
                                                             </table>
                                                         </div>
@@ -172,6 +168,14 @@
                                                                 </tbody>
                                                             </table>
                                                         </div>
+                                                        <form action="{{ url('/user/reorder') }}" method="post" class="position-relative">
+                                                            @csrf
+                                                            <input type="hidden" value="{{ $order->id }}" name="id">
+                                                            <button class="aa-add-to-cart-btn" style="background-color: white; margin: auto"
+                                                            type="submit">
+                                                                Reorder
+                                                            </button>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>

@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Item;
+use App\Mail\OrderCreated;
 use App\Order;
 use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class User extends Controller
 {
@@ -107,8 +109,9 @@ class User extends Controller
                 Product::where('id', $pro->id)->decrement('quantity', $pro->quantity);
             }
         }
+        Mail::to('markskilink@gmail.com')->send(new OrderCreated());
         session()->forget('cart');
-        return redirect('/user/order');
+        return redirect('/user/orders');
     }
 
     public function orderView() {
@@ -116,6 +119,29 @@ class User extends Controller
             'title' => 'User - Order',
             'orders' => Auth::user()->Orders
         ]);
+    }
+
+    public function reorder(Request $req) {
+        $req->validate([
+            'id' => 'required'
+        ]);
+        $addToCart = array_map(
+            fn($item) => [
+                'id' => $item['product_id'],
+                'quantity' => $item['quantity']
+            ], Order::find($req->get('id'))->Items->toArray()
+        );
+        $cart = $this->getCart($req);
+        $merged = [];
+        foreach ($addToCart as $item) {
+            $pro = $cart;
+            if (!in_array($item, $cart)) $merged[] = $item;
+            else {
+
+            }
+        }
+        session(['cart' => $cart]);
+        return redirect('/user/cart');
     }
 
     public function signOut() {
