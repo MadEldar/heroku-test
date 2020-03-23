@@ -135,15 +135,11 @@ class User extends Controller
         $merged = [];
         foreach ($addToCart as $item) {
             $pro = array_filter($cart, fn($pro) => $pro['id'] == $item['id']);
-            dd(array_key_first($pro));
-            if (array_key_first($pro) < 0) $merged[] = $item;
-            else {
-                $pro = $pro[array_key_first($pro)];
-                $pro['quantity'] += $item['quantity'];
-                $merged[] = $pro;
-            }
+//            dd(array_key_first($pro));
+            if (array_key_first($pro) < 0) $cart[] = $item;
+            else $cart[key($pro)]['quantity'] += $item['quantity'];
         }
-        dd($merged);
+        dd($cart);
 //        session(['cart' => $cart]);
         return redirect('/user/cart');
     }
