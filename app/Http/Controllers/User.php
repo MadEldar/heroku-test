@@ -134,13 +134,17 @@ class User extends Controller
         $cart = $this->getCart($req);
         $merged = [];
         foreach ($addToCart as $item) {
-            $pro = $cart;
-            if (!in_array($item, $cart)) $merged[] = $item;
+            $pro = array_filter($cart, fn($pro) => $pro['id'] == $item['id']);
+            dd(array_key_first($pro));
+            if (array_key_first($pro) < 0) $merged[] = $item;
             else {
-
+                $pro = $pro[array_key_first($pro)];
+                $pro['quantity'] += $item['quantity'];
+                $merged[] = $pro;
             }
         }
-        session(['cart' => $cart]);
+        dd($merged);
+//        session(['cart' => $cart]);
         return redirect('/user/cart');
     }
 
