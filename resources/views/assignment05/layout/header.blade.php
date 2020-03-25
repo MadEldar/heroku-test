@@ -1,3 +1,4 @@
+@php use \Illuminate\Support\Facades\Auth as Auth @endphp
 <!-- wpf loader Two -->
 <div id="wpf-loader-two">
     <div class="wpf-loader-two-inner">
@@ -62,7 +63,7 @@
                                 <li class="hidden-xs"><a href="{{ url('/user/orders') }}">Order</a></li>
                                 <li class="hidden-xs"><a href="{{ url('/user/cart') }}">My Cart</a></li>
                                 <li class="hidden-xs"><a href="{{ url('/user/checkout') }}">Checkout</a></li>
-                                @if(\Illuminate\Support\Facades\Auth::check())
+                                @if(Auth::check())
                                     <li><a href="{{ url('/assignment05/sign-out') }}">Sign out</a></li>
                                 @else
                                     <li><a href="{{ url('/assignment05/sign-in') }}">Sign in</a></li>
@@ -95,35 +96,63 @@
                         <!-- / logo  -->
                         <!-- cart box -->
                         <div class="aa-cartbox">
-                            <a class="aa-cart-link" href="#">
+                            <a class="aa-cart-link" href="{{ url('/user/cart') }}">
                                 <span class="fa fa-shopping-basket"></span>
                                 <span class="aa-cart-title">SHOPPING CART</span>
-                                <span class="aa-cart-notify">2</span>
+                                <span class="aa-cart-notify">
+                                    @php
+                                    $cart = session()->get('cart');
+                                    if (isset($cart)) {
+                                        echo count($cart);
+                                        $cart = array_map(function ($pro) {
+                                            $quantity = $pro['quantity'];
+                                            $pro = \App\Product::where('id', $pro['id'])->get()[0];
+                                            $pro['quantity'] = $quantity;
+                                            $pro['total'] = $pro['quantity'] * $pro['price'];
+                                            return $pro;
+                                        }, $cart);
+                                    }
+                                    else echo 0;
+                                    @endphp
+                                </span>
                             </a>
                             <div class="aa-cartbox-summary">
-                                <ul>
-                                    <li>
-                                        <a class="aa-cartbox-img" href="#"><img src="{{ asset('img/woman-small-2.jpg') }}" alt="img"></a>
-                                        <div class="aa-cartbox-info">
-                                            <h4><a href="#">Product Name</a></h4>
-                                            <p>1 x $250</p>
-                                        </div>
-                                        <a class="aa-remove-product" href="#"><span class="fa fa-times"></span></a>
-                                    </li>
-                                    <li>
-                                        <a class="aa-cartbox-img" href="#"><img src="{{ asset('img/woman-small-1.jpg') }}" alt="img"></a>
-                                        <div class="aa-cartbox-info">
-                                            <h4><a href="#">Product Name</a></h4>
-                                            <p>1 x $250</p>
-                                        </div>
-                                        <a class="aa-remove-product" href="#"><span class="fa fa-times"></span></a>
-                                    </li>
-                                    <li>
-                                        <span class="aa-cartbox-total-title">Total</span>
-                                        <span class="aa-cartbox-total-price">$500</span>
-                                    </li>
-                                </ul>
-                                <a class="aa-cartbox-checkout aa-primary-btn" href="checkout.html">Checkout</a>
+                                @if(Auth::check())
+                                    <ul>
+                                        @if(isset($cart))
+                                            @foreach($cart as $key=>$pro)
+                                                @if($key > 3) <li><a href="{{ url('/user/cart') }}">And more (click to see all)</a></li> @break @endif
+                                                <li>
+                                                    <a class="aa-cartbox-img" href="#"><img src="{{ $pro->product_thumbnail }}" alt="img"></a>
+                                                    <div class="aa-cartbox-info">
+                                                        <h4><a href="#">{{ $pro->product_name }}</a></h4>
+                                                        <p>{{ $pro->quantity }} x ${{ number_format($pro->price, 2) }}</p>
+                                                    </div>
+{{--                                                    <a class="aa-remove-product" href="#"><span class="fa fa-times"></span></a>--}}
+                                                </li>
+                                            @endforeach
+                                            <li>
+                                                <span class="aa-cartbox-total-title">Total</span>
+                                                <span class="aa-cartbox-total-price">${{
+                                                    array_reduce(
+                                                        array_map(
+                                                            fn($pro) => $pro['total'],
+                                                            $cart
+                                                        ),
+                                                        fn($sum, $cur) => $cur + $sum
+                                                    )
+                                                }}</span>
+                                            </li>
+                                            <li>
+                                                <a class="aa-cartbox-checkout aa-primary-btn" href="{{ url('/user/checkout') }}">Checkout</a>
+                                            </li>
+                                        @else
+                                            <p>There is no product in the cart</p>
+                                        @endif
+                                    </ul>
+                                @else
+                                    <p>You are not signed in</p>
+                                @endif
                             </div>
                         </div>
                         <!-- / cart box -->

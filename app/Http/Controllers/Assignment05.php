@@ -135,6 +135,6 @@ class Assignment05 extends Controller
     {
         Auth::logout();
         session()->flush();
-        return redirect()->back();
+        return redirect('/');
     }
 }

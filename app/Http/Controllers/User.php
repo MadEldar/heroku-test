@@ -9,12 +9,11 @@ use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
-use function Sodium\increment;
 
 class User extends Controller
 {
-    private function getCart(Request $req) {
-        $cart = $req->session()->get('cart');
+    private function getCart() {
+        $cart = session()->get('cart');
         return isset($cart) ? $cart : [];
     }
 
@@ -44,10 +43,9 @@ class User extends Controller
         $currentProduct = Product::find($req->get('id'));
         if ($req->get('quantity') > $currentProduct->quantity)
             return redirect()->back()->withErrors(["This product only has $currentProduct->quantity more in stocks"]);
-        $cart = $this->getCart($req);
-        $key = array_key_first(array_filter($cart, fn($pro) => $pro['id'] == $req->get('id')));
-        $product = $key >= 0 ? array_splice($cart, $key, 1) : [];
-        $product = $product == [] ? null : $product[0];
+        $cart = $this->getCart();
+        $product = array_filter($cart, fn($pro) => $pro['id'] == $req->get('id'));
+        $product = $product == [] ? null : array_splice($cart, array_search(array_shift($product), $cart), 1)[0];
         if (isset($product)) {
             $product['quantity'] += $req->get('quantity');
             if ($product['quantity'] > $currentProduct->quantity)
@@ -64,7 +62,7 @@ class User extends Controller
     }
 
     public function cartView(Request $req) {
-        $cart = $this->calculateCart($this->getCart($req));
+        $cart = $this->calculateCart($this->getCart());
         if (!isset($cart[0])) return redirect('/assignment05')->withErrors(['The cart is empty']);
         return view('/assignment05/cart', [
             'title' => 'User - Cart',
@@ -73,7 +71,7 @@ class User extends Controller
     }
 
     public function checkoutView(Request $req) {
-        $cart = $this->calculateCart($this->getCart($req));
+        $cart = $this->calculateCart($this->getCart());
         return view('/assignment05/checkout', [
             'title' => 'User - Checkout',
             'cart' => $cart
@@ -88,7 +86,7 @@ class User extends Controller
             'shipping_address' => 'required',
             'payment_method' => 'required',
         ]);
-        $cart = $this->calculateCart($this->getCart($req));
+        $cart = $this->calculateCart($this->getCart());
         $order = Order::create([
             'user_id' => Auth::user()->id,
             'name_first' => $req->get('name_first'),
@@ -132,7 +130,7 @@ class User extends Controller
                 'quantity' => $item['quantity']
             ], Order::find($req->get('id'))->Items->toArray()
         );
-        $cart = $this->getCart($req);
+        $cart = $this->getCart();
         foreach ($addToCart as $item) {
             $pro = array_filter($cart, fn($pro) => $pro['id'] == $item['id']);
             if (array_key_first($pro) < 0 || $pro == []) $cart[] = $item;
