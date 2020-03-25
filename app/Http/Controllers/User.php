@@ -9,6 +9,7 @@ use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use function Sodium\increment;
 
 class User extends Controller
 {
@@ -40,14 +41,17 @@ class User extends Controller
             'id' => 'required|exists:products',
             'quantity' => 'required|gt:0'
         ]);
-        if ($req->get('quantity') > Product::find($req->get('id'))->quantity)
-            return redirect()->back()->withErrors(['Selected quantity is more than stocks']);
+        $currentProduct = Product::find($req->get('id'));
+        if ($req->get('quantity') > $currentProduct->quantity)
+            return redirect()->back()->withErrors(["This product only has $currentProduct->quantity more in stocks"]);
         $cart = $this->getCart($req);
         $key = array_key_first(array_filter($cart, fn($pro) => $pro['id'] == $req->get('id')));
-        $product = $key > 0 ? array_splice($cart, $key, 1) : [];
+        $product = $key >= 0 ? array_splice($cart, $key, 1) : [];
         $product = $product == [] ? null : $product[0];
         if (isset($product)) {
             $product['quantity'] += $req->get('quantity');
+            if ($product['quantity'] > $currentProduct->quantity)
+                return redirect()->back()->withErrors(["The total amount of this product in your cart exceeds current quantity"]);
         } else {
             $product = [
                 'id' => $req->get('id'),
@@ -109,7 +113,7 @@ class User extends Controller
                 Product::where('id', $pro->id)->decrement('quantity', $pro->quantity);
             }
         }
-        Mail::to('markskilink@gmail.com')->send(new OrderCreated());
+        Mail::to($order->email)->send(new OrderCreated($order));
         session()->forget('cart');
         return redirect('/user/orders');
     }
@@ -122,9 +126,6 @@ class User extends Controller
     }
 
     public function reorder(Request $req) {
-        $req->validate([
-            'id' => 'required'
-        ]);
         $addToCart = array_map(
             fn($item) => [
                 'id' => $item['product_id'],
@@ -132,16 +133,23 @@ class User extends Controller
             ], Order::find($req->get('id'))->Items->toArray()
         );
         $cart = $this->getCart($req);
-        $merged = [];
         foreach ($addToCart as $item) {
             $pro = array_filter($cart, fn($pro) => $pro['id'] == $item['id']);
-//            dd(array_key_first($pro));
-            if (array_key_first($pro) < 0) $cart[] = $item;
+            if (array_key_first($pro) < 0 || $pro == []) $cart[] = $item;
             else $cart[key($pro)]['quantity'] += $item['quantity'];
         }
-        dd($cart);
-//        session(['cart' => $cart]);
+        session(['cart' => $cart]);
         return redirect('/user/cart');
+    }
+
+    public function cancel(Request $req) {
+        $order = Order::find($req->get('id'));
+        foreach ($order->Items->toArray() as $pro) {
+            Product::where('id', $pro['product_id'])->increment('quantity', $pro['quantity']);
+        }
+        $order->status = 5;
+        $order->save();
+        return redirect('/user/orders');
     }
 
     public function signOut() {

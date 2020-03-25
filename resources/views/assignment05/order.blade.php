@@ -31,14 +31,28 @@
                         <div class="col-md-12">
                             <div class="checkout-left">
                                 <div class="panel-group" id="accordion">
-                                    @php $last_item = end($orders)[0] @endphp
+                                    @php
+                                        $last_item = end($orders)[0];
+                                        $convertStatus = function ($status) {
+                                            switch ($status) {
+                                                case 0: return 'Pending';
+                                                case 1: return 'Confirmed';
+                                                case 2: return 'Shipping';
+                                                case 3: return 'Delivered';
+                                                case 4: return 'Received';
+                                                case 5: return 'Cancelled';
+                                                default: return 'Unknown';
+                                            }
+                                        }
+                                    @endphp
                                     @forelse($orders as $order)
                                         <!-- Order -->
                                         <div class="panel panel-default aa-checkout-billaddress">
                                             <div class="panel-heading">
                                                 <h4 class="panel-title">
                                                     <a data-toggle="collapse" data-parent="#accordion" href="#{{ $order->id }}">
-                                                        {{ $order->created_at }}
+                                                        <span>{{ $order->created_at }}</span>
+                                                        <span style="float: right">{{ $convertStatus($order->status) }}</span>
                                                     </a>
                                                 </h4>
                                             </div>
@@ -125,7 +139,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="">
+                                                <div style="margin-bottom: 120px">
                                                     <div class="cart-view-table">
                                                         <div class="table-responsive">
                                                             <table class="table">
@@ -141,7 +155,7 @@
                                                                 @foreach($order->Items as $pro)
                                                                     <tr>
                                                                         <td>
-                                                                            <a class="aa-cart-title" href="{{ url("/assignment05/product/$pro->id") }}"
+                                                                            <a class="aa-cart-title" href="{{ url("/assignment05/product/$pro->product_id") }}"
                                                                                target="_blank">
                                                                                 {{ \App\Product::where('id', $pro->product_id)->select('product_name')->get()[0]->product_name }}
                                                                             </a>
@@ -155,7 +169,7 @@
                                                             </table>
                                                         </div>
                                                         <!-- Cart Total view -->
-                                                        <div class="cart-view-total">
+                                                        <div class="cart-view-total col-md-4" style="margin-left: 25%">
                                                             <h4>Cart Totals</h4>
                                                             <table class="aa-totals-table">
                                                                 <tbody>
@@ -168,14 +182,25 @@
                                                                 </tbody>
                                                             </table>
                                                         </div>
-                                                        <form action="{{ url('/user/reorder') }}" method="post" class="position-relative">
-                                                            @csrf
-                                                            <input type="hidden" value="{{ $order->id }}" name="id">
-                                                            <button class="aa-add-to-cart-btn" style="background-color: white; margin: auto"
-                                                            type="submit">
-                                                                Reorder
-                                                            </button>
-                                                        </form>
+                                                        <div class="pull-right" style="margin-top: 40px">
+                                                            <form action="{{ url('/user/reorder') }}" method="post" style="width: max-content; margin: 0 15px; display: inline-block">
+                                                                @csrf
+                                                                <input type="hidden" name="id" value="{{ $order->id }}">
+                                                                <button class="aa-add-to-cart-btn" style="background-color: white; margin: auto"
+                                                                type="submit">
+                                                                    Reorder
+                                                                </button>
+                                                            </form>
+                                                            @if($order->status < 2)
+                                                                <form action="{{ url('/user/cancel') }}" method="post" style="width: max-content; margin: 0 15px; display: inline-block">
+                                                                    @csrf
+                                                                    <input type="hidden" name="id" value="{{ $order->id }}">
+                                                                    <button class="aa-add-to-cart-btn" style="background-color: white; margin: auto" type="submit">
+                                                                        Cancel
+                                                                    </button>
+                                                                </form>
+                                                            @endif
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>

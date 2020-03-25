@@ -6,3 +6,4 @@ Route::get('/orders', 'User@orderView');
 Route::get('/checkout', 'User@checkoutView');
 Route::post('/checkout', 'User@checkout');
 Route::post('/reorder', 'User@reorder');
+Route::post('/cancel', 'User@cancel');

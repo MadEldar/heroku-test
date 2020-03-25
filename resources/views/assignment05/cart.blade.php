@@ -32,8 +32,8 @@
                             <table class="table">
                                 <thead>
                                 <tr>
-                                    <th></th>
-                                    <th></th>
+{{--                                    <th></th>--}}
+                                    <th>Thumbnail</th>
                                     <th>Product</th>
                                     <th>Price</th>
                                     <th>Quantity</th>
@@ -44,7 +44,7 @@
                                 @forelse($cart as $key=>$pro)
                                     @if(is_int($key))
                                         <tr>
-                                            <td><a class="remove" href="#"><fa class="fa fa-close"></fa></a></td>
+{{--                                            <td><a class="remove" href="#"><fa class="fa fa-close"></fa></a></td>--}}
                                             <td><a href="#"><img src="{{ $pro->product_thumbnail }}" alt="img"></a></td>
                                             <td>
                                                 <a class="aa-cart-title" href="{{ url("/assignment05/product/$pro->id") }}"
@@ -53,22 +53,25 @@
                                                 </a>
                                             </td>
                                             <td>{{ number_format($pro->price, 2) }}</td>
-                                            <td><input class="aa-cart-quantity" type="number" value="{{ $pro->quantity }}"></td>
+                                            <td>
+{{--                                                <input class="aa-cart-quantity" type="number" value="{{ $pro->quantity }}">--}}
+                                                {{ $pro->quantity }}
+                                            </td>
                                             <td>${{ number_format($pro->total, 2) }}</td>
                                         </tr>
                                     @endif
                                 @empty
                                     <p>There is no product in the cart</p>
                                 @endforelse
-                                <tr>
-                                    <td colspan="6" class="aa-cart-view-bottom">
-                                        <div class="aa-cart-coupon">
-                                            <input class="aa-coupon-code" type="text" placeholder="Coupon">
-                                            <input class="aa-cart-view-btn" type="submit" value="Apply Coupon">
-                                        </div>
-                                        <input class="aa-cart-view-btn" type="submit" value="Update Cart">
-                                    </td>
-                                </tr>
+{{--                                <tr>--}}
+{{--                                    <td colspan="6" class="aa-cart-view-bottom">--}}
+{{--                                        <div class="aa-cart-coupon">--}}
+{{--                                            <input class="aa-coupon-code" type="text" placeholder="Coupon">--}}
+{{--                                            <input class="aa-cart-view-btn" type="submit" value="Apply Coupon">--}}
+{{--                                        </div>--}}
+{{--                                        <input class="aa-cart-view-btn" type="submit" value="Update Cart">--}}
+{{--                                    </td>--}}
+{{--                                </tr>--}}
                                 </tbody>
                             </table>
                         </div>
