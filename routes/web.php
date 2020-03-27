@@ -23,9 +23,6 @@ Route::prefix('user')->middleware('check_role')->group(function () {
     include_once("user.php");
 });
 
-Route::get('/', function () {
-    return view('welcome');
-});
 Route::get('/', 'dailyShop@homepage');
 Route::get('/search', 'dailyShop@search');
 Route::get('/product/{proId}', 'dailyShop@product');

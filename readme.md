@@ -70,3 +70,16 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-source software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## Admin privilege
+When the console first runs Laravel's seeding command, an admin account will be created with the following credentials:
+
+Email: admin@dailyshop.com
+
+Password: 1
+
+User can then proceed to route "/admin/home" to access admin's privileges.
+
+![Navbar](./public/img/navigation-bar.png)
+
+Note: The sidebar is purely cosmetics. All content are in the navigation bar and in the main section. 
