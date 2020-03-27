@@ -8,8 +8,16 @@ $('table').on('click', 'a[data-toggle]', function () {
     });
 });
 
-$('#table-brand').DataTable();
-$('#table-category').DataTable();
+$('#table-brand').DataTable({
+    order: [
+        [ 3, 'desc' ]
+    ]
+});
+$('#table-category').DataTable({
+    order: [
+        [ 3, 'desc' ]
+    ]
+});
 $('#table-product').DataTable({
     columns: [{
         width: "5%"
