@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-@include('assignment05/layout/head')
+@include('layout/head')
 <body>
-@include('assignment05/layout/header')
+@include('layout/header')
 
 <!-- catg header banner section -->
 <section id="aa-catg-head-banner">
@@ -13,13 +13,13 @@
                 <h2>{{ $product->product_name }}</h2>
                 <ol class="breadcrumb">
                     <li>
-                        <a href="/blog/public/assignment05">
+                        <a href="{{ url('/') }}">
                             Home
                         </a>
                     </li>
                     <li>
-                        <a href="/blog/public/assignment05/category?cat={{ $product->category_id }}">
-                            {{ $product->category_name }}
+                        <a href="{{ url("/search?cat=$product->category_id") }}">
+                            {{ $product->Category->category_name }}
                         </a>
                     </li>
                     <li class="active">{{ $product->product_name }}</li>
@@ -30,7 +30,6 @@
 </section>
 <!-- / catg header banner section -->
 
-<!-- product category -->
 <section id="aa-product-details">
     <div class="container">
         <div class="row">
@@ -43,17 +42,18 @@
                                 <div class="aa-product-view-slider">
                                     <div id="demo-1" class="simpleLens-gallery-container">
                                         <div class="simpleLens-container">
-                                            <div class="simpleLens-big-image-container"><a data-lens-image="/blog/public/img/view-slider/large/polo-shirt-1.png" class="simpleLens-lens-image"><img src="/blog/public/img/view-slider/medium/polo-shirt-1.png" class="simpleLens-big-image"></a></div>
+                                            <div class="simpleLens-big-image-container">
+                                                <a data-lens-image="{{ $product->product_thumbnail }}" class="simpleLens-lens-image">
+                                                    <img src="{{ $product->product_thumbnail }}" class="simpleLens-big-image">
+                                                </a>
+                                            </div>
                                         </div>
                                         <div class="simpleLens-thumbnails-container">
-                                            <a data-big-image="/blog/public/img/view-slider/medium/polo-shirt-1.png" data-lens-image="/blog/public/img/view-slider/large/polo-shirt-1.png" class="simpleLens-thumbnail-wrapper" href="#">
-                                                <img src="/blog/public/img/view-slider/thumbnail/polo-shirt-1.png">
+                                            <a data-big-image="{{ $product->product_thumbnail }}" data-lens-image="{{ $product->product_thumbnail }}" class="simpleLens-thumbnail-wrapper">
+                                                <img src="{{ $product->product_thumbnail }}">
                                             </a>
-                                            <a data-big-image="/blog/public/img/view-slider/medium/polo-shirt-3.png" data-lens-image="/blog/public/img/view-slider/large/polo-shirt-3.png" class="simpleLens-thumbnail-wrapper" href="#">
-                                                <img src="/blog/public/img/view-slider/thumbnail/polo-shirt-3.png">
-                                            </a>
-                                            <a data-big-image="/blog/public/img/view-slider/medium/polo-shirt-4.png" data-lens-image="/blog/public/img/view-slider/large/polo-shirt-4.png" class="simpleLens-thumbnail-wrapper" href="#">
-                                                <img src="/blog/public/img/view-slider/thumbnail/polo-shirt-4.png">
+                                            <a data-big-image="{{ $product->product_gallery }}" data-lens-image="{{ $product->product_gallery }}" class="simpleLens-thumbnail-wrapper">
+                                                <img src="{{ $product->product_gallery }}">
                                             </a>
                                         </div>
                                     </div>
@@ -61,7 +61,8 @@
                             </div>
                             <!-- Modal view content -->
                             <div class="col-md-7 col-sm-7 col-xs-12">
-                                <div class="aa-product-view-content">
+                                <form class="aa-product-view-content" action="{{ url('/user/add-cart') }}" method="post">
+                                    @csrf
                                     <h3>{{ $product->product_name }}</h3>
                                     <div class="aa-price-block">
                                         <span class="aa-product-view-price">${{ number_format($product->price, 2) }}</span>
@@ -92,29 +93,32 @@
                                         <a href="#" class="aa-color-white"></a>
                                     </div>
                                     <div class="aa-prod-quantity">
-                                        <form action="">
-                                            <select id="" name="">
-                                                <option selected="1" value="0">1</option>
-                                                <option value="1">2</option>
-                                                <option value="2">3</option>
-                                                <option value="3">4</option>
-                                                <option value="4">5</option>
-                                                <option value="5">6</option>
-                                            </select>
-                                        </form>
+                                        <input type="number" name="quantity" style="width: 10%" value="1">
                                         <p class="aa-prod-category">
-                                            Brand: <a href="#">{{ $product->brand_name }}</a>
+                                            Brand: <a href="{{ url("/search?brand=$product->brand_id") }}">{{ $product->Brand->brand_name }}</a>
                                         </p>
                                     </div>
                                     <div class="aa-prod-view-bottom">
-                                        <a class="aa-add-to-cart-btn" href="#">Add To Cart</a>
+                                        <input type="hidden" name="id" value="{{ $product->id }}">
+                                        <button class="aa-add-to-cart-btn" style="background-color: white" type="submit">Add To Cart</button>
                                         <a class="aa-add-to-cart-btn" href="#">Wishlist</a>
                                         <a class="aa-add-to-cart-btn" href="#">Compare</a>
                                     </div>
-                                </div>
+                                </form>
                             </div>
                         </div>
                     </div>
+
+                    @if ($errors->any())
+                        <div class="alert alert-danger px-3 py-1">
+                            @foreach ($errors->all() as $error)
+                                <h5 class="m-0">{{ $error }}</h5>
+                            @endforeach
+                        </div>
+                @endif
+
+                <!-- product category -->
+
                     <div class="aa-product-details-bottom">
                         <ul class="nav nav-tabs" id="myTab2">
                             <li><a href="#description" data-toggle="tab">Description</a></li>
@@ -134,7 +138,7 @@
                                             <div class="media">
                                                 <div class="media-left">
                                                     <a href="#">
-                                                        <img class="media-object" src="/blog/public/img/testimonial-img-3.jpg" alt="girl image">
+                                                        <img class="media-object" src="{{ asset('img/testimonial-img-3.jpg') }}" alt="girl image">
                                                     </a>
                                                 </div>
                                                 <div class="media-body">
@@ -154,7 +158,7 @@
                                             <div class="media">
                                                 <div class="media-left">
                                                     <a href="#">
-                                                        <img class="media-object" src="/blog/public/img/testimonial-img-3.jpg" alt="girl image">
+                                                        <img class="media-object" src="{{ asset('img/testimonial-img-3.jpg') }}" alt="girl image">
                                                     </a>
                                                 </div>
                                                 <div class="media-body">
@@ -203,7 +207,7 @@
                     </div>
                     <!-- Related product -->
                     <div class="aa-product-related-item">
-                        <h3>Same Brand</h3>
+                        <h3>From <a href="{{ url("/search?brand=$product->brand_id") }}" style="color: #ff6666">{{ $product->Brand->brand_name }}</a></h3>
                         <ul class="aa-product-catg aa-related-item-slider">
                             @foreach($same_brand as $pro)
                             <!-- start single product item -->
@@ -212,7 +216,7 @@
                                     <a class="aa-product-img" href="#"><img src="{{ $pro['product_thumbnail'] }}" alt="{{ $pro['product_name'] }}"></a>
                                     <a class="aa-add-card-btn" href="#"><span class="fa fa-shopping-cart"></span>Add To Cart</a>
                                     <figcaption>
-                                        <h4 class="aa-product-title"><a href="/blog/public/assignment05/product?pro={{ $pro['id'] }}">{{ $pro['product_name'] }}</a></h4>
+                                        <h4 class="aa-product-title"><a href="{{ url("/product/$pro[id]") }}">{{ $pro['product_name'] }}</a></h4>
                                         <span class="aa-product-price">${{ number_format($pro['price'], 2) }}</span>
                                     </figcaption>
                                 </figure>
@@ -240,7 +244,7 @@
                                                         <div class="simpleLens-container">
                                                             <div class="simpleLens-big-image-container">
                                                                 <a class="simpleLens-lens-image" data-lens-image="/blog/public/img/view-slider/large/polo-shirt-1.png">
-                                                                    <img src="/blog/public/img/view-slider/medium/polo-shirt-1.png" class="simpleLens-big-image">
+                                                                    <img src="{{ asset('img/view-slider/medium/polo-shirt-1.png') }}" class="simpleLens-big-image">
                                                                 </a>
                                                             </div>
                                                         </div>
@@ -248,18 +252,18 @@
                                                             <a href="#" class="simpleLens-thumbnail-wrapper"
                                                                data-lens-image="/blog/public/img/view-slider/large/polo-shirt-1.png"
                                                                data-big-image="/blog/public/img/view-slider/medium/polo-shirt-1.png">
-                                                                <img src="/blog/public/img/view-slider/thumbnail/polo-shirt-1.png">
+                                                                <img src="{{ asset('img/view-slider/thumbnail/polo-shirt-1.png') }}">
                                                             </a>
                                                             <a href="#" class="simpleLens-thumbnail-wrapper"
                                                                data-lens-image="/blog/public/img/view-slider/large/polo-shirt-3.png"
                                                                data-big-image="/blog/public/img/view-slider/medium/polo-shirt-3.png">
-                                                                <img src="/blog/public/img/view-slider/thumbnail/polo-shirt-3.png">
+                                                                <img src="{{ asset('img/view-slider/thumbnail/polo-shirt-3.png') }}">
                                                             </a>
 
                                                             <a href="#" class="simpleLens-thumbnail-wrapper"
                                                                data-lens-image="/blog/public/img/view-slider/large/polo-shirt-4.png"
                                                                data-big-image="/blog/public/img/view-slider/medium/polo-shirt-4.png">
-                                                                <img src="/blog/public/img/view-slider/thumbnail/polo-shirt-4.png">
+                                                                <img src="{{ asset('img/view-slider/thumbnail/polo-shirt-4.png') }}">
                                                             </a>
                                                         </div>
                                                     </div>
@@ -311,7 +315,7 @@
                     </div>
                     <!-- Related product -->
                     <div class="aa-product-related-item">
-                        <h3>Same Category</h3>
+                        <h3>From <a href="{{ url("/search?cat=$product->category_id") }}" style="color: #ff6666">{{ $product->Category->category_name }}</a></h3>
                         <ul class="aa-product-catg aa-related-item-slider">
                             @foreach($same_category as $pro)
                             <!-- start single product item -->
@@ -320,7 +324,7 @@
                                     <a class="aa-product-img" href="#"><img src="{{ $pro['product_thumbnail'] }}" alt="{{ $pro['product_name'] }}"></a>
                                     <a class="aa-add-card-btn" href="#"><span class="fa fa-shopping-cart"></span>Add To Cart</a>
                                     <figcaption>
-                                        <h4 class="aa-product-title"><a href="/blog/public/assignment05/product?pro={{ $pro['id'] }}">{{ $pro['product_name'] }}</a></h4>
+                                        <h4 class="aa-product-title"><a href="{{ url("/product/$pro[id]") }}">{{ $pro['product_name'] }}</a></h4>
                                         <span class="aa-product-price">${{ number_format($pro['price'], 2) }}</span>
                                     </figcaption>
                                 </figure>
@@ -348,7 +352,7 @@
                                                         <div class="simpleLens-container">
                                                             <div class="simpleLens-big-image-container">
                                                                 <a class="simpleLens-lens-image" data-lens-image="/blog/public/img/view-slider/large/polo-shirt-1.png">
-                                                                    <img src="/blog/public/img/view-slider/medium/polo-shirt-1.png" class="simpleLens-big-image">
+                                                                    <img src="{{ asset('img/view-slider/medium/polo-shirt-1.png') }}" class="simpleLens-big-image">
                                                                 </a>
                                                             </div>
                                                         </div>
@@ -356,18 +360,18 @@
                                                             <a href="#" class="simpleLens-thumbnail-wrapper"
                                                                data-lens-image="/blog/public/img/view-slider/large/polo-shirt-1.png"
                                                                data-big-image="/blog/public/img/view-slider/medium/polo-shirt-1.png">
-                                                                <img src="/blog/public/img/view-slider/thumbnail/polo-shirt-1.png">
+                                                                <img src="{{ asset('img/view-slider/thumbnail/polo-shirt-1.png') }}">
                                                             </a>
                                                             <a href="#" class="simpleLens-thumbnail-wrapper"
                                                                data-lens-image="/blog/public/img/view-slider/large/polo-shirt-3.png"
                                                                data-big-image="/blog/public/img/view-slider/medium/polo-shirt-3.png">
-                                                                <img src="/blog/public/img/view-slider/thumbnail/polo-shirt-3.png">
+                                                                <img src="{{ asset('img/view-slider/thumbnail/polo-shirt-3.png') }}">
                                                             </a>
 
                                                             <a href="#" class="simpleLens-thumbnail-wrapper"
                                                                data-lens-image="/blog/public/img/view-slider/large/polo-shirt-4.png"
                                                                data-big-image="/blog/public/img/view-slider/medium/polo-shirt-4.png">
-                                                                <img src="/blog/public/img/view-slider/thumbnail/polo-shirt-4.png">
+                                                                <img src="{{ asset('img/view-slider/thumbnail/polo-shirt-4.png') }}">
                                                             </a>
                                                         </div>
                                                     </div>
@@ -424,8 +428,8 @@
 </section>
 <!-- / product category -->
 
-@include('assignment05/layout/footer')
+@include('layout/footer')
 
-@include('assignment05/layout/scripts')
+@include('layout/scripts')
 </body>
 </html>

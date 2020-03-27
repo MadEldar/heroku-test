@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-@include('assignment05/log-layout/head')
+@include('log-layout/head')
 <body class="hold-transition register-page">
 <div class="register-box">
     <div class="register-logo">
@@ -19,7 +19,7 @@
                 </div>
             @endif
 
-            <form action="{{ url('/assignment05/sign-up') }}" method="post">
+            <form action="{{ url('/sign-up') }}" method="post">
                 @csrf
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" placeholder="Full name" name="name">
@@ -69,13 +69,13 @@
                     <!-- /.col -->
                 </div>
             </form>
-            <a href="{{ url('/assignment05/sign-in') }}" class="text-center">Sign in</a>
+            <a href="{{ url('/sign-in') }}" class="text-center">Sign in</a>
         </div>
         <!-- /.form-box -->
     </div><!-- /.card -->
 </div>
 <!-- /.register-box -->
 
-@include('assignment05/log-layout/scripts')
+@include('log-layout/scripts')
 </body>
 </html>

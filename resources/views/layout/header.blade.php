@@ -1,9 +1,10 @@
+@php use \Illuminate\Support\Facades\Auth as Auth @endphp
 <!-- wpf loader Two -->
-<div id="wpf-loader-two">
-    <div class="wpf-loader-two-inner">
-        <span>Loading</span>
-    </div>
-</div>
+{{--<div id="wpf-loader-two">--}}
+{{--    <div class="wpf-loader-two-inner">--}}
+{{--        <span>Loading</span>--}}
+{{--    </div>--}}
+{{--</div>--}}
 <!-- / wpf loader Two -->
 
 <!-- SCROLL TOP BUTTON -->
@@ -24,12 +25,12 @@
                             <div class="aa-language">
                                 <div class="dropdown">
                                     <a class="btn dropdown-toggle" href="#" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                        <img src="img/flag/english.jpg" alt="english flag">ENGLISH
+                                        <img src="{{ asset('img/flag/english.jpg') }}" alt="english flag">ENGLISH
                                         <span class="caret"></span>
                                     </a>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                        <li><a href="#"><img src="img/flag/french.jpg" alt="">FRENCH</a></li>
-                                        <li><a href="#"><img src="img/flag/english.jpg" alt="">ENGLISH</a></li>
+                                        <li><a href="#"><img src="{{ asset('img/flag/french.jpg') }}" alt="">FRENCH</a></li>
+                                        <li><a href="#"><img src="{{ asset('img/flag/english.jpg') }}" alt="">ENGLISH</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -59,10 +60,14 @@
                         <div class="aa-header-top-right">
                             <ul class="aa-head-top-nav-right">
                                 <li><a href="account.html">My Account</a></li>
-                                <li class="hidden-xs"><a href="wishlist.html">Wishlist</a></li>
-                                <li class="hidden-xs"><a href="cart.html">My Cart</a></li>
-                                <li class="hidden-xs"><a href="checkout.html">Checkout</a></li>
-                                <li><a href="" data-toggle="modal" data-target="#login-modal">Login</a></li>
+                                <li class="hidden-xs"><a href="{{ url('/user/orders') }}">Order</a></li>
+                                <li class="hidden-xs"><a href="{{ url('/user/cart') }}">My Cart</a></li>
+                                <li class="hidden-xs"><a href="{{ url('/user/checkout') }}">Checkout</a></li>
+                                @if(Auth::check())
+                                    <li><a href="{{ url('/sign-out') }}">Sign out</a></li>
+                                @else
+                                    <li><a href="{{ url('/sign-in') }}">Sign in</a></li>
+                                @endif
                             </ul>
                         </div>
                     </div>
@@ -81,7 +86,7 @@
                         <!-- logo  -->
                         <div class="aa-logo">
                             <!-- Text based logo -->
-                            <a href="index.html">
+                            <a href="{{ url('/') }}">
                                 <span class="fa fa-shopping-cart"></span>
                                 <p>daily<strong>Shop</strong> <span>Your Shopping Partner</span></p>
                             </a>
@@ -91,39 +96,63 @@
                         <!-- / logo  -->
                         <!-- cart box -->
                         <div class="aa-cartbox">
-                            <a class="aa-cart-link" href="#">
+                            <a class="aa-cart-link" href="{{ url('/user/cart') }}">
                                 <span class="fa fa-shopping-basket"></span>
                                 <span class="aa-cart-title">SHOPPING CART</span>
-                                <span class="aa-cart-notify">2</span>
+                                <span class="aa-cart-notify">
+                                    @php
+                                    $cart = session()->get('cart');
+                                    if (isset($cart)) {
+                                        echo count($cart);
+                                        $cart = array_map(function ($pro) {
+                                            $quantity = $pro['quantity'];
+                                            $pro = \App\Product::where('id', $pro['id'])->get()[0];
+                                            $pro['quantity'] = $quantity;
+                                            $pro['total'] = $pro['quantity'] * $pro['price'];
+                                            return $pro;
+                                        }, $cart);
+                                    }
+                                    else echo 0;
+                                    @endphp
+                                </span>
                             </a>
                             <div class="aa-cartbox-summary">
-                                <ul>
-                                    <li>
-                                        <a class="aa-cartbox-img" href="#"><img src="img/woman-small-2.jpg" alt="img"></a>
-                                        <div class="aa-cartbox-info">
-                                            <h4><a href="#">Product Name</a></h4>
-                                            <p>1 x $250</p>
-                                        </div>
-                                        <a class="aa-remove-product" href="#"><span class="fa fa-times"></span></a>
-                                    </li>
-                                    <li>
-                                        <a class="aa-cartbox-img" href="#"><img src="img/woman-small-1.jpg" alt="img"></a>
-                                        <div class="aa-cartbox-info">
-                                            <h4><a href="#">Product Name</a></h4>
-                                            <p>1 x $250</p>
-                                        </div>
-                                        <a class="aa-remove-product" href="#"><span class="fa fa-times"></span></a>
-                                    </li>
-                                    <li>
-                      <span class="aa-cartbox-total-title">
-                        Total
-                      </span>
-                                        <span class="aa-cartbox-total-price">
-                        $500
-                      </span>
-                                    </li>
-                                </ul>
-                                <a class="aa-cartbox-checkout aa-primary-btn" href="checkout.html">Checkout</a>
+                                @if(Auth::check())
+                                    <ul>
+                                        @if(isset($cart))
+                                            @foreach($cart as $key=>$pro)
+                                                @if($key > 3) <li><a href="{{ url('/user/cart') }}">And more (click to see all)</a></li> @break @endif
+                                                <li>
+                                                    <a class="aa-cartbox-img" href="#"><img src="{{ $pro->product_thumbnail }}" alt="img"></a>
+                                                    <div class="aa-cartbox-info">
+                                                        <h4><a href="#">{{ $pro->product_name }}</a></h4>
+                                                        <p>{{ $pro->quantity }} x ${{ number_format($pro->price, 2) }}</p>
+                                                    </div>
+{{--                                                    <a class="aa-remove-product" href="#"><span class="fa fa-times"></span></a>--}}
+                                                </li>
+                                            @endforeach
+                                            <li>
+                                                <span class="aa-cartbox-total-title">Total</span>
+                                                <span class="aa-cartbox-total-price">${{
+                                                    array_reduce(
+                                                        array_map(
+                                                            fn($pro) => $pro['total'],
+                                                            $cart
+                                                        ),
+                                                        fn($sum, $cur) => $cur + $sum
+                                                    )
+                                                }}</span>
+                                            </li>
+                                            <li>
+                                                <a class="aa-cartbox-checkout aa-primary-btn" href="{{ url('/user/checkout') }}">Checkout</a>
+                                            </li>
+                                        @else
+                                            <p>There is no product in the cart</p>
+                                        @endif
+                                    </ul>
+                                @else
+                                    <p>You are not signed in</p>
+                                @endif
                             </div>
                         </div>
                         <!-- / cart box -->
@@ -161,7 +190,7 @@
                 <div class="navbar-collapse collapse">
                     <!-- Left nav -->
                     <ul class="nav navbar-nav">
-                        <li><a href="index.html">Home</a></li>
+                        <li><a href="{{ url('/') }}">Home</a></li>
                         <li><a href="#">Men <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="#">Casual</a></li>

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-@include('assignment05/layout/head')
+@include('layout/head')
 <body>
-@include('assignment05/layout/header')
+@include('layout/header')
 
 <!-- catg header banner section -->
 <section id="aa-catg-head-banner">
@@ -12,7 +12,7 @@
             <div class="aa-catg-head-banner-content">
                 <h2>Cart</h2>
                 <ol class="breadcrumb">
-                    <li><a href="{{ url('/assignment05') }}">Home</a></li>
+                    <li><a href="{{ url('/') }}">Home</a></li>
                     <li class="active">Checkout</li>
                 </ol>
             </div>
@@ -136,16 +136,8 @@
                                             </tbody>
                                             <tfoot>
                                             <tr>
-                                                <th>Subtotal</th>
-                                                <td>${{ number_format($cart['sum'], 2) }}</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Tax</th>
-                                                <td>${{ number_format($cart['sum'] / 10 , 2) }}</td>
-                                            </tr>
-                                            <tr>
                                                 <th>Total</th>
-                                                <td>${{ number_format($cart['sum'] * 9 / 10 , 2) }}</td>
+                                                <td>${{ number_format($cart['sum'], 2) }}</td>
                                             </tr>
                                             </tfoot>
                                         </table>
@@ -174,8 +166,8 @@
 </section>
 <!-- / Cart view section -->
 
-@include('assignment05/layout/footer')
+@include('layout/footer')
 
-@include('assignment05/layout/scripts')
+@include('layout/scripts')
 </body>
 </html>

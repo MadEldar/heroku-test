@@ -9,7 +9,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class Assignment05 extends Controller
+class dailyShop extends Controller
 {
     public function homepage() {
         $categories = Category::take(5)
@@ -30,7 +30,7 @@ class Assignment05 extends Controller
         $lowCost = Product::take(8)
             ->orderBy('price', 'asc')
             ->get();
-        return view('assignment05/homepage', [
+        return view('homepage', [
             'title' => 'Daily Shop - Homepage',
             'categories' => json_decode($categories, true),
             'products' => [
@@ -57,7 +57,7 @@ class Assignment05 extends Controller
             ->withCount('Products')
             ->orderBy('products_count', 'desc')
             ->get();
-        return view('assignment05/search', [
+        return view('search', [
             'title' => $result->name . ' - Category',
             'result' => $result,
             'top_5' => [
@@ -77,7 +77,7 @@ class Assignment05 extends Controller
             ->where('id', '!=', $proId)
             ->take(8)
             ->get();
-        return view('assignment05/product', [
+        return view('product', [
             'title' => $product->product_name . ' - Product details',
             'product' => $product,
             'same_brand' => $same_brand,
@@ -85,13 +85,13 @@ class Assignment05 extends Controller
         ]);
     }
 
-    public function signIn() {
-        return view('assignment05/sign-in', [
+    public function signInView() {
+        return view('sign-in', [
             'title' => 'Daily shop - Sign in'
         ]);
     }
 
-    public function signedIn(Request $req) {
+    public function signIn(Request $req) {
         $req->validate([
             'email' => 'required',
             'password' => 'required'
@@ -99,7 +99,7 @@ class Assignment05 extends Controller
         $user = User::where('email', $req->get('email'))->get()[0];
         if ($user->email == $req->get('email') && $user->password == $req->get('password')) {
             Auth::login($user, true);
-            return redirect()->to('/assignment05');
+            return redirect()->to('/');
         } else {
             $errors = [
                 'Incorrect email or password'
@@ -108,14 +108,13 @@ class Assignment05 extends Controller
         }
     }
 
-    public function signUp(Request $req) {
-        return view('assignment05/sign-up', [
+    public function signUpView(Request $req) {
+        return view('sign-up', [
             'title' => 'Daily shop - Sign up'
         ]);
     }
 
-    public function signedUp(Request $req)
-    {
+    public function signUp(Request $req) {
         $req->validate([
             'email' => 'required|unique:users',
             'name' => 'required',
@@ -128,7 +127,7 @@ class Assignment05 extends Controller
             'password' => $req->get('password'),
             'role' => 0,
         ]);
-        return redirect()->to('/assignment05/sign-in');
+        return redirect()->to('/sign-in');
     }
 
     public function signOut()

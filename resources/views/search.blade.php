@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-@include('assignment05/layout/head')
+@include('layout/head')
 <body>
-@include('assignment05/layout/header')
+@include('layout/header')
 
 <!-- catg header banner section -->
 <section id="aa-catg-head-banner">
@@ -12,8 +12,8 @@
             <div class="aa-catg-head-banner-content">
                 <h2>Fashion</h2>
                 <ol class="breadcrumb">
-                    <li><a href="/blog/public/">Home</a></li>
-                    <li class="active">{{ $category->category_name }}</li>
+                    <li><a href="{{ url('/') }}">Home</a></li>
+                    <li class="active">{{ $result->name }}</li>
                 </ol>
             </div>
         </div>
@@ -32,7 +32,7 @@
                             <form action="" class="aa-sort-form">
                                 <label for="">Sort by</label>
                                 <select name="">
-                                    <option value="1" selected="Default">Default</option>
+                                    <option value="1" selected="selected">Default</option>
                                     <option value="2">Name</option>
                                     <option value="3">Price</option>
                                     <option value="4">Date</option>
@@ -41,7 +41,7 @@
                             <form action="" class="aa-show-form">
                                 <label for="">Show</label>
                                 <select name="">
-                                    <option value="1" selected="12">12</option>
+                                    <option value="1" selected="selected">12</option>
                                     <option value="2">24</option>
                                     <option value="3">36</option>
                                 </select>
@@ -54,7 +54,7 @@
                     </div>
                     <div class="aa-product-catg-body">
                         <ul class="aa-product-catg">
-                            @foreach($category->products as $pro)
+                            @foreach($result->products as $pro)
                                 <!-- start single product item -->
                                     <li>
                                         <figure>
@@ -62,7 +62,7 @@
                                             <a class="aa-add-card-btn" href="#"><span class="fa fa-shopping-cart"></span>Add To Cart</a>
                                             <figcaption>
                                                 <h4 class="aa-product-title">
-                                                    <a href="/blog/public/assignment05/product?pro={{ $pro['id'] }}">
+                                                    <a href=" {{ url("/product/$pro[id]") }}">
                                                         {{ $pro['product_name'] }}
                                                     </a>
                                                 </h4>
@@ -94,7 +94,7 @@
                                                         <div class="simpleLens-container">
                                                             <div class="simpleLens-big-image-container">
                                                                 <a class="simpleLens-lens-image" data-lens-image="img/view-slider/large/polo-shirt-1.png">
-                                                                    <img src="img/view-slider/medium/polo-shirt-1.png" class="simpleLens-big-image">
+                                                                    <img src="{{ asset('img/view-slider/medium/polo-shirt-1.png') }}" class="simpleLens-big-image">
                                                                 </a>
                                                             </div>
                                                         </div>
@@ -102,18 +102,18 @@
                                                             <a href="#" class="simpleLens-thumbnail-wrapper"
                                                                data-lens-image="img/view-slider/large/polo-shirt-1.png"
                                                                data-big-image="img/view-slider/medium/polo-shirt-1.png">
-                                                                <img src="img/view-slider/thumbnail/polo-shirt-1.png">
+                                                                <img src="{{ asset('img/view-slider/thumbnail/polo-shirt-1.png') }}">
                                                             </a>
                                                             <a href="#" class="simpleLens-thumbnail-wrapper"
                                                                data-lens-image="img/view-slider/large/polo-shirt-3.png"
                                                                data-big-image="img/view-slider/medium/polo-shirt-3.png">
-                                                                <img src="img/view-slider/thumbnail/polo-shirt-3.png">
+                                                                <img src="{{ asset('img/view-slider/thumbnail/polo-shirt-3.png') }}">
                                                             </a>
 
                                                             <a href="#" class="simpleLens-thumbnail-wrapper"
                                                                data-lens-image="img/view-slider/large/polo-shirt-4.png"
                                                                data-big-image="img/view-slider/medium/polo-shirt-4.png">
-                                                                <img src="img/view-slider/thumbnail/polo-shirt-4.png">
+                                                                <img src="{{ asset('img/view-slider/thumbnail/polo-shirt-4.png') }}">
                                                             </a>
                                                         </div>
                                                     </div>
@@ -186,10 +186,27 @@
                 <aside class="aa-sidebar">
                     <!-- single sidebar -->
                     <div class="aa-sidebar-widget">
-                        <h3>Category</h3>
+                        <h3>Categories</h3>
                         <ul class="aa-catg-nav">
-                            @foreach($top_5 as $cat)
-                                <li><a href="/blog/public/assignment05/category?cat={{ $cat->id }}">{{ $cat->category_name }}</a></li>
+                            @foreach($top_5['cat'] as $cat)
+                                <li>
+                                    <a  @if($cat->category_name === $result->name) style="color: #ff6666" @else  href="{{ url("/search?cat=$cat->id") }}" @endif>
+                                        {{ $cat->category_name }}
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    <!-- single sidebar -->
+                    <div class="aa-sidebar-widget">
+                        <h3>Brands</h3>
+                        <ul class="aa-catg-nav">
+                            @foreach($top_5['brand'] as $brand)
+                                <li>
+                                    <a  @if($brand->brand_name === $result->name) style="color: #ff6666" @else  href="{{ url("/search?brand=$brand->id") }}" @endif>
+                                        {{ $brand->brand_name }}
+                                    </a>
+                                </li>
                             @endforeach
                         </ul>
                     </div>
@@ -246,8 +263,8 @@
 </section>
 <!-- / product category -->
 
-@include('assignment05/layout/footer')
+@include('layout/footer')
 
-@include('assignment05/layout/scripts')
+@include('layout/scripts')
 </body>
 </html>

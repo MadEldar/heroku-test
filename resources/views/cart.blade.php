@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-@include('assignment05/layout/head')
+@include('layout/head')
 <body>
-@include('assignment05/layout/header')
+@include('layout/header')
 
 <!-- catg header banner section -->
 <section id="aa-catg-head-banner">
@@ -12,7 +12,7 @@
             <div class="aa-catg-head-banner-content">
                 <h2>Cart</h2>
                 <ol class="breadcrumb">
-                    <li><a href="{{ url('/assignment05') }}">Home</a></li>
+                    <li><a href="{{ url('/') }}">Home</a></li>
                     <li class="active">Cart</li>
                 </ol>
             </div>
@@ -47,7 +47,7 @@
 {{--                                            <td><a class="remove" href="#"><fa class="fa fa-close"></fa></a></td>--}}
                                             <td><a href="#"><img src="{{ $pro->product_thumbnail }}" alt="img"></a></td>
                                             <td>
-                                                <a class="aa-cart-title" href="{{ url("/assignment05/product/$pro->id") }}"
+                                                <a class="aa-cart-title" href="{{ url("/product/$pro->id") }}"
                                                 target="_blank">
                                                     {{ $pro->product_name }}
                                                 </a>
@@ -98,8 +98,8 @@
 </section>
 <!-- / Cart view section -->
 
-@include('assignment05/layout/footer')
+@include('layout/footer')
 
-@include('assignment05/layout/scripts')
+@include('layout/scripts')
 </body>
 </html>

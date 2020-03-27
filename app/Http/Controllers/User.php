@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Item;
-use App\Mail\OrderCreated;
 use App\Order;
 use App\Product;
+use App\Mail\OrderCreated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -17,7 +17,7 @@ class User extends Controller
         return isset($cart) ? $cart : [];
     }
 
-    private function calculateCart($cart) {
+    private function populateCart($cart) {
         $cart = array_map(function ($pro) {
             $quantity = $pro['quantity'];
             $pro = Product::where('id', $pro['id'])->get()[0];
@@ -62,17 +62,17 @@ class User extends Controller
     }
 
     public function cartView(Request $req) {
-        $cart = $this->calculateCart($this->getCart());
-        if (!isset($cart[0])) return redirect('/assignment05')->withErrors(['The cart is empty']);
-        return view('/assignment05/cart', [
+        $cart = $this->populateCart($this->getCart());
+        if (!isset($cart[0])) return redirect('/')->withErrors(['The cart is empty']);
+        return view('cart', [
             'title' => 'User - Cart',
             'cart' => $cart
         ]);
     }
 
     public function checkoutView(Request $req) {
-        $cart = $this->calculateCart($this->getCart());
-        return view('/assignment05/checkout', [
+        $cart = $this->populateCart($this->getCart());
+        return view('checkout', [
             'title' => 'User - Checkout',
             'cart' => $cart
         ]);
@@ -86,7 +86,7 @@ class User extends Controller
             'shipping_address' => 'required',
             'payment_method' => 'required',
         ]);
-        $cart = $this->calculateCart($this->getCart());
+        $cart = $this->populateCart($this->getCart());
         $order = Order::create([
             'user_id' => Auth::user()->id,
             'name_first' => $req->get('name_first'),
@@ -113,11 +113,11 @@ class User extends Controller
         }
         Mail::to($order->email)->send(new OrderCreated($order));
         session()->forget('cart');
-        return redirect('/user/orders');
+        return redirect('/user/orders#' . $order->id);
     }
 
     public function orderView() {
-        return view('assignment05/order', [
+        return view('order', [
             'title' => 'User - Order',
             'orders' => Auth::user()->Orders
         ]);

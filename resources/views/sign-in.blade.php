@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
-@include('/assignment05/log-layout/head')
+@include('log-layout/head')
 <body class="hold-transition login-page">
 <div class="login-box">
     <div class="login-logo">
-        <a href="{{ url('/assignment05') }}">dailyShop</a>
+        <a href="{{ url('/') }}">dailyShop</a>
     </div>
     <!-- /.login-logo -->
     <div class="card">
@@ -19,7 +19,7 @@
                 </div>
             @endif
 
-            <form action="{{ url('/assignment05/sign-in') }}" method="post">
+            <form action="{{ url('/sign-in') }}" method="post">
                 @csrf
                 <div class="input-group mb-3">
                     <input type="email" class="form-control" placeholder="Email" name="email">
@@ -58,7 +58,7 @@
                 <a href="forgot-password.html">I forgot my password</a>
             </p>
             <p class="mb-0">
-                <a href="{{ url('assignment05/sign-up') }}" class="text-center">Sign up</a>
+                <a href="{{ url('sign-up') }}" class="text-center">Sign up</a>
             </p>
         </div>
         <!-- /.login-card-body -->
@@ -66,6 +66,6 @@
 </div>
 <!-- /.login-box -->
 
-@include('/assignment05/log-layout/scripts')
+@include('log-layout/scripts')
 </body>
 </html>

@@ -27,7 +27,7 @@ class CheckRole
                 return $next($request);
             }
         } else {
-            return redirect('/assignment05/sign-in')->withErrors(['User must login first.']);
+            return redirect('/sign-in')->withErrors(['User must login first.']);
         }
     }
 }

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-@include('assignment05/layout/head')
+@include('layout/head')
 <body>
-@include('assignment05/layout/header')
+@include('layout/header')
 
 <!-- catg header banner section -->
 <section id="aa-catg-head-banner">
@@ -12,7 +12,7 @@
             <div class="aa-catg-head-banner-content">
                 <h2>Cart</h2>
                 <ol class="breadcrumb">
-                    <li><a href="{{ url('/assignment05') }}">Home</a></li>
+                    <li><a href="{{ url('/') }}">Home</a></li>
                     <li class="active">Order</li>
                 </ol>
             </div>
@@ -32,7 +32,6 @@
                             <div class="checkout-left">
                                 <div class="panel-group" id="accordion">
                                     @php
-                                        $last_item = end($orders)[0];
                                         $convertStatus = function ($status) {
                                             switch ($status) {
                                                 case 0: return 'Pending';
@@ -56,7 +55,7 @@
                                                     </a>
                                                 </h4>
                                             </div>
-                                            <div id="{{ $order->id }}" class="panel-collapse collapse @if($last_item == $order) in @endif">
+                                            <div id="{{ $order->id }}" class="panel-collapse collapse">
                                                 <div class="panel-body">
                                                     <div class="row">
                                                         <div class="col-md-6">
@@ -155,7 +154,7 @@
                                                                 @foreach($order->Items as $pro)
                                                                     <tr>
                                                                         <td>
-                                                                            <a class="aa-cart-title" href="{{ url("/assignment05/product/$pro->product_id") }}"
+                                                                            <a class="aa-cart-title" href="{{ url("/product/$pro->product_id") }}"
                                                                                target="_blank">
                                                                                 {{ \App\Product::where('id', $pro->product_id)->select('product_name')->get()[0]->product_name }}
                                                                             </a>
@@ -168,9 +167,9 @@
                                                                 </tbody>
                                                             </table>
                                                         </div>
-                                                        <!-- Cart Total view -->
+                                                        <!-- Order Total view -->
                                                         <div class="cart-view-total col-md-4" style="margin-left: 25%">
-                                                            <h4>Cart Totals</h4>
+                                                            <h4>Order Totals</h4>
                                                             <table class="aa-totals-table">
                                                                 <tbody>
                                                                 <tr>
@@ -219,8 +218,17 @@
 </section>
 <!-- / Cart view section -->
 
-@include('assignment05/layout/footer')
+@include('layout/footer')
 
-@include('assignment05/layout/scripts')
+@include('layout/scripts')
+
+<script>
+    $(window).on('load', function () {
+        if (window.location.hash.length > 0) $('a[href="' + window.location.hash + '"]').children().trigger('click');
+        else $('a[data-parent="#accordion"]').first().children().trigger('click');
+    });
+    (() => {
+    })();
+</script>
 </body>
 </html>
